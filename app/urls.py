@@ -55,13 +55,11 @@ urlpatterns = [
     path('alumnidashboard/career-resource/', views.career_resource, name='career_resource'),
     path('alumnidashboard/upcoming-events/', views.upcoming_events, name='upcoming_events'),
     path('alumnidashboard/conference/', views.conference, name='conference'),
-<<<<<<< HEAD
 
-=======
     path('alumnidashboard/alumni_survey/', views.alumni_survey, name='alumni_survey'),
     path('aluminidashboard/croudfunding/', views.croudfunding_view, name='alumni_crowdfunding'),
     path('alumnidashboard/campaignoutput/', views.croudfunding_output, name='campaignoutput'),
->>>>>>> 0891298 (final push)
+
 
     #Nav common
     path('about/',views.about,name='about')
