@@ -29,8 +29,6 @@ urlpatterns = [
     path('studentdashboard/', views.student_dashboard, name='student_dashboard'),
     path('alumnidashboard/', views.alumni_dashboard, name='alumni_dashboard'),
     path('admindashboard/', views.admin_dashboard, name='admin_dashboard'),
-<<<<<<< HEAD
-=======
 
     # Student Dashboard Sub-pages
     path('studentdashboard/apply-internship/', views.apply_internship, name='apply_internship'),
@@ -38,7 +36,7 @@ urlpatterns = [
     path('studentdashboard/apply-conference/', views.apply_conference, name='apply_conference'),
     path('studentdashboard/student_feedback/', views.student_feedback, name='studentfeedback'),
     path('studentdashboard/Career_Resource/', views.career_resource_view, name='career_output_resource'),
->>>>>>> 0891298 (final push)
+
     
     # Admin Dashboard Sub-pages
     path('admindashboard/student-data/', views.student_data, name='student_data'),
