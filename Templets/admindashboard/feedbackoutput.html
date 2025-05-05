@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Admin Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fb;
+        }
+        
+        .dashboard {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 28px;
+        }
+        
+        .header .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .header .user-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: #3498db;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stat-card h3 {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .stat-card .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .filter-option {
+            padding: 8px 16px;
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .filter-option.active {
+            background-color: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+        
+        .data-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .card h2 {
+            color: #2c3e50;
+            font-size: 18px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f1f1f1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card h2 .count {
+            background-color: #f1f1f1;
+            color: #7f8c8d;
+            font-size: 14px;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+        
+        .feedback-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .feedback-item {
+            padding: 15px;
+            border-bottom: 1px solid #f1f1f1;
+        }
+        
+        .feedback-item:last-child {
+            border-bottom: none;
+        }
+        
+        .feedback-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .feedback-author {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .feedback-date {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        
+        .feedback-rating {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .star {
+            color: #f1c40f;
+        }
+        
+        .feedback-text {
+            color: #34495e;
+            line-height: 1.5;
+        }
+        
+        .chart-container {
+            height: 300px;
+            padding: 10px;
+        }
+
+        #feedbackTypeSwitch {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            padding: 5px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #feedbackTypeSwitch button {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 5px;
+            color: #7f8c8d;
+            font-weight: bold;
+        }
+
+        #feedbackTypeSwitch button.active {
+            background-color: white;
+            color: #2c3e50;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        table th {
+            background-color: #f8f9fa;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+
+        table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 5px;
+        }
+
+        .pagination button {
+            padding: 8px 12px;
+            border: 1px solid #e0e0e0;
+            background-color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .pagination button.active {
+            background-color: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="header">
+            <h1>Feedback Admin Dashboard</h1>
+            <div class="user-info">
+                <span>Admin User</span>
+                <div class="user-avatar">A</div>
+            </div>
+        </div>
+
+        <div id="feedbackTypeSwitch">
+            <button id="studentBtn" class="active">Student Feedback</button>
+            <button id="alumniBtn">Alumni Feedback</button>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <h3>Total Feedback</h3>
+                <div class="stat-value" id="totalFeedback">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Average Rating</h3>
+                <div class="stat-value" id="avgRating">0.0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Feedback This Month</h3>
+                <div class="stat-value" id="feedbackThisMonth">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Completion Rate</h3>
+                <div class="stat-value" id="completionRate">0%</div>
+            </div>
+        </div>
+
+        <div class="filters">
+            <div class="filter-option active">All Time</div>
+            <div class="filter-option">This Month</div>
+            <div class="filter-option">This Week</div>
+        </div>
+
+        <div class="data-container">
+            <div class="card">
+                <h2>Rating Distribution <span class="count" id="ratingCount">0 ratings</span></h2>
+                <div class="chart-container">
+                    <canvas id="ratingChart"></canvas>
+                </div>
+            </div>
+            <div class="card">
+                <h2>Feedback Over Time</h2>
+                <div class="chart-container">
+                    <canvas id="timeChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Recent Feedback <span class="count" id="feedbackCount">0 items</span></h2>
+            <div class="table-responsive">
+                <table id="feedbackTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Rating</th>
+                            <th>Feedback</th>
+                        </tr>
+                    </thead>
+                    <tbody id="feedbackTableBody">
+                        <!-- Feedback items will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination" id="pagination">
+                <button>1</button>
+                <button>2</button>
+                <button>3</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data for demonstration
+        const studentFeedbackData = [
+            { id: 1, name: "John Smith", date: "2025-04-28", rating: 4, feedback: "The course content was excellent and very informative. I particularly enjoyed the practical assignments.", course: "Web Development", year: "2nd Year" },
+            { id: 2, name: "Sarah Johnson", date: "2025-04-27", rating: 5, feedback: "The professor was engaging and the material was well-structured. Would recommend this course to others.", course: "Data Science", year: "3rd Year" },
+            { id: 3, name: "Michael Chen", date: "2025-04-26", rating: 3, feedback: "Good content but the pace was too fast. Would appreciate more time for complex topics.", course: "Artificial Intelligence", year: "4th Year" },
+            { id: 4, name: "Emily Davis", date: "2025-04-25", rating: 5, feedback: "One of the best courses I've taken. The instructor was knowledgeable and supportive.", course: "Business Economics", year: "1st Year" },
+            { id: 5, name: "David Wilson", date: "2025-04-24", rating: 2, feedback: "The material was outdated and there wasn't enough practical application.", course: "Marketing", year: "3rd Year" },
+            { id: 6, name: "Jessica Brown", date: "2025-04-23", rating: 4, feedback: "Great course! The group projects helped me understand the concepts better.", course: "Psychology", year: "2nd Year" },
+            { id: 7, name: "Daniel Lee", date: "2025-04-22", rating: 3, feedback: "Course was okay, but I expected more hands-on activities.", course: "Electrical Engineering", year: "4th Year" },
+            { id: 8, name: "Amanda Taylor", date: "2025-04-21", rating: 5, feedback: "Excellent teaching methods and very helpful resources provided.", course: "Biochemistry", year: "3rd Year" },
+            { id: 9, name: "Ryan Garcia", date: "2025-04-20", rating: 4, feedback: "The course challenged me in a good way. I learned a lot of new skills.", course: "Computer Science", year: "2nd Year" },
+            { id: 10, name: "Olivia Martinez", date: "2025-04-19", rating: 3, feedback: "The content was good but the assessments were confusing at times.", course: "Mathematics", year: "1st Year" },
+        ];
+
+        const alumniFeedbackData = [
+            { id: 1, name: "James Wilson", date: "2025-04-28", rating: 5, feedback: "My education prepared me well for my career in software development. The programming courses were particularly valuable.", graduationYear: "2022", currentEmployer: "Google" },
+            { id: 2, name: "Lisa Anderson", date: "2025-04-27", rating: 4, feedback: "The networking opportunities during my time at the university helped me secure my first job. Would recommend more industry partnerships.", graduationYear: "2020", currentEmployer: "Microsoft" },
+            { id: 3, name: "Robert Johnson", date: "2025-04-26", rating: 3, feedback: "While I enjoyed my time at the university, I think the curriculum could be updated to match industry needs better.", graduationYear: "2021", currentEmployer: "Amazon" },
+            { id: 4, name: "Jennifer Thompson", date: "2025-04-25", rating: 5, feedback: "The university provided an excellent foundation for my career. The professors were outstanding mentors.", graduationYear: "2019", currentEmployer: "Apple" },
+            { id: 5, name: "Christopher Davis", date: "2025-04-24", rating: 4, feedback: "The alumni network has been invaluable for my professional growth. I appreciate the continued support after graduation.", graduationYear: "2023", currentEmployer: "IBM" },
+            { id: 6, name: "Michelle Robinson", date: "2025-04-23", rating: 2, feedback: "I wish there had been more practical training and internship opportunities during my studies.", graduationYear: "2022", currentEmployer: "Netflix" },
+            { id: 7, name: "Kevin Harris", date: "2025-04-22", rating: 5, feedback: "The leadership skills I developed during my time at the university have been crucial to my career advancement.", graduationYear: "2020", currentEmployer: "Tesla" },
+            { id: 8, name: "Stephanie Clark", date: "2025-04-21", rating: 4, feedback: "Looking back, I appreciate the well-rounded education I received. It gave me versatility in my career path.", graduationYear: "2021", currentEmployer: "Facebook" },
+            { id: 9, name: "Thomas Rodriguez", date: "2025-04-20", rating: 3, feedback: "The technical skills were great, but I would have benefited from more soft skills training.", graduationYear: "2023", currentEmployer: "Adobe" },
+            { id: 10, name: "Patricia Lewis", date: "2025-04-19", rating: 4, feedback: "I'm proud to be an alumnus. The university's reputation has helped me in my professional journey.", graduationYear: "2019", currentEmployer: "Salesforce" },
+        ];
+
+        // Current active data set (starts with student feedback)
+        let currentFeedbackData = studentFeedbackData;
+        let currentPage = 1;
+        const itemsPerPage = 5;
+
+        // Initialize the dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup feedback type switcher
+            document.getElementById('studentBtn').addEventListener('click', function() {
+                document.getElementById('studentBtn').classList.add('active');
+                document.getElementById('alumniBtn').classList.remove('active');
+                currentFeedbackData = studentFeedbackData;
+                updateDashboard();
+            });
+
+            document.getElementById('alumniBtn').addEventListener('click', function() {
+                document.getElementById('alumniBtn').classList.add('active');
+                document.getElementById('studentBtn').classList.remove('active');
+                currentFeedbackData = alumniFeedbackData;
+                updateDashboard();
+            });
+
+            // Setup filter options
+            const filterOptions = document.querySelectorAll('.filter-option');
+            filterOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    filterOptions.forEach(o => o.classList.remove('active'));
+                    this.classList.add('active');
+                    updateDashboard();
+                });
+            });
+
+            // Initialize dashboard with student feedback data
+            updateDashboard();
+        });
+
+        function updateDashboard() {
+            updateStats();
+            updateCharts();
+            updateFeedbackTable();
+        }
+
+        function updateStats() {
+            // Update the statistics cards
+            document.getElementById('totalFeedback').textContent = currentFeedbackData.length;
+            
+            const avgRating = currentFeedbackData.reduce((sum, item) => sum + item.rating, 0) / currentFeedbackData.length;
+            document.getElementById('avgRating').textContent = avgRating.toFixed(1);
+            
+            // Calculate this month's feedback
+            const currentDate = new Date();
+            const thisMonth = currentDate.getMonth();
+            const thisYear = currentDate.getFullYear();
+            
+            const thisMonthFeedback = currentFeedbackData.filter(item => {
+                const feedbackDate = new Date(item.date);
+                return feedbackDate.getMonth() === thisMonth && feedbackDate.getFullYear() === thisYear;
+            });
+            
+            document.getElementById('feedbackThisMonth').textContent = thisMonthFeedback.length;
+            
+            // Simulated completion rate
+            document.getElementById('completionRate').textContent = "87%";
+            
+            // Update counts
+            document.getElementById('ratingCount').textContent = `${currentFeedbackData.length} ratings`;
+            document.getElementById('feedbackCount').textContent = `${currentFeedbackData.length} items`;
+        }
+
+        function updateCharts() {
+            // Create rating distribution chart
+            const ratingCounts = [0, 0, 0, 0, 0]; // For ratings 1-5
+            
+            currentFeedbackData.forEach(item => {
+                ratingCounts[item.rating - 1]++;
+            });
+            
+            const ratingChartCtx = document.getElementById('ratingChart').getContext('2d');
+            
+            // Clear previous chart if it exists
+            if (window.ratingChart) {
+                window.ratingChart.destroy();
+            }
+            
+            window.ratingChart = new Chart(ratingChartCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['1 Star', '2 Stars', '3 Stars', '4 Stars', '5 Stars'],
+                    datasets: [{
+                        label: 'Number of Ratings',
+                        data: ratingCounts,
+                        backgroundColor: [
+                            '#e74c3c',
+                            '#e67e22',
+                            '#f1c40f',
+                            '#2ecc71',
+                            '#27ae60'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                precision: 0
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Create feedback over time chart
+            // Group feedback by months
+            const timeData = {};
+            const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            
+            currentFeedbackData.forEach(item => {
+                const date = new Date(item.date);
+                const monthYear = `${monthNames[date.getMonth()]} ${date.getFullYear()}`;
+                
+                if (!timeData[monthYear]) {
+                    timeData[monthYear] = {
+                        count: 0,
+                        ratings: 0
+                    };
+                }
+                
+                timeData[monthYear].count++;
+                timeData[monthYear].ratings += item.rating;
+            });
+            
+            const timeLabels = Object.keys(timeData).sort((a, b) => {
+                const dateA = new Date(a);
+                const dateB = new Date(b);
+                return dateA - dateB;
+            });
+            
+            const timeDataCounts = timeLabels.map(label => timeData[label].count);
+            const timeDataAvgRatings = timeLabels.map(label => 
+                (timeData[label].ratings / timeData[label].count).toFixed(1)
+            );
+            
+            const timeChartCtx = document.getElementById('timeChart').getContext('2d');
+            
+            // Clear previous chart if it exists
+            if (window.timeChart) {
+                window.timeChart.destroy();
+            }
+            
+            window.timeChart = new Chart(timeChartCtx, {
+                type: 'line',
+                data: {
+                    labels: timeLabels,
+                    datasets: [
+                        {
+                            label: 'Feedback Count',
+                            data: timeDataCounts,
+                            borderColor: '#3498db',
+                            backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.4,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Average Rating',
+                            data: timeDataAvgRatings,
+                            borderColor: '#2ecc71',
+                            backgroundColor: 'transparent',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            tension: 0.4,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'Feedback Count'
+                            },
+                            ticks: {
+                                precision: 0
+                            }
+                        },
+                        y1: {
+                            beginAtZero: true,
+                            max: 5,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'Average Rating'
+                            },
+                            grid: {
+                                drawOnChartArea: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateFeedbackTable() {
+            const tableBody = document.getElementById('feedbackTableBody');
+            tableBody.innerHTML = '';
+            
+            // Calculate pagination
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, currentFeedbackData.length);
+            const totalPages = Math.ceil(currentFeedbackData.length / itemsPerPage);
+            
+            // Update pagination buttons
+            updatePagination(totalPages);
+            
+            // Display current page items
+            for (let i = startIndex; i < endIndex; i++) {
+                const item = currentFeedbackData[i];
+                const row = document.createElement('tr');
+                
+                // Format date
+                const feedbackDate = new Date(item.date);
+                const formattedDate = feedbackDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+                
+                // Create stars for rating
+                let starsHTML = '';
+                for (let j = 1; j <= 5; j++) {
+                    if (j <= item.rating) {
+                        starsHTML += '<span class="star">★</span>';
+                    } else {
+                        starsHTML += '<span class="star" style="color: #e0e0e0;">★</span>';
+                    }
+                }
+                
+                row.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>${formattedDate}</td>
+                    <td>${starsHTML}</td>
+                    <td>${item.feedback}</td>
+                `;
+                
+                tableBody.appendChild(row);
+            }
+        }
+
+        function updatePagination(totalPages) {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+            
+            // Previous button
+            if (totalPages > 1) {
+                const prevButton = document.createElement('button');
+                prevButton.textContent = '←';
+                prevButton.disabled = currentPage === 1;
+                prevButton.addEventListener('click', function() {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        updateFeedbackTable();
+                    }
+                });
+                pagination.appendChild(prevButton);
+            }
+            
+            // Page buttons
+            for (let i = 1; i <= totalPages; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.textContent = i;
+                if (i === currentPage) {
+                    pageButton.classList.add('active');
+                }
+                pageButton.addEventListener('click', function() {
+                    currentPage = i;
+                    updateFeedbackTable();
+                });
+                pagination.appendChild(pageButton);
+            }
+            
+            // Next button
+            if (totalPages > 1) {
+                const nextButton = document.createElement('button');
+                nextButton.textContent = '→';
+                nextButton.disabled = currentPage === totalPages;
+                nextButton.addEventListener('click', function() {
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        updateFeedbackTable();
+                    }
+                });
+                pagination.appendChild(nextButton);
+            }
+        }
+
+        // Function to parse CSV data from uploads
+        function parseCSVFeedback(csvData, feedbackType) {
+            Papa.parse(csvData, {
+                header: true,
+                skipEmptyLines: true,
+                complete: function(results) {
+                    if (feedbackType === 'student') {
+                        // Map CSV data to our format
+                        const newData = results.data.map((item, index) => ({
+                            id: studentFeedbackData.length + index + 1,
+                            name: item.Name || item.name || "Anonymous",
+                            date: item.Date || item.date || new Date().toISOString().split('T')[0],
+                            rating: parseInt(item.Rating || item.rating || "3"),
+                            feedback: item.Feedback || item.feedback || item.Comments || item.comments || "",
+                            course: item.Course || item.course || "",
+                            year: item.Year || item.year || ""
+                        }));
+                        
+                        // Add to existing data
+                        studentFeedbackData.push(...newData);
+                        
+                        // Update if currently showing student data
+                        if (currentFeedbackData === studentFeedbackData) {
+                            updateDashboard();
+                        }
+                    } else {
+                        // Map CSV data to our format
+                        const newData = results.data.map((item, index) => ({
+                            id: alumniFeedbackData.length + index + 1,
+                            name: item.Name || item.name || "Anonymous",
+                            date: item.Date || item.date || new Date().toISOString().split('T')[0],
+                            rating: parseInt(item.Rating || item.rating || "3"),
+                            feedback: item.Feedback || item.feedback || item.Comments || item.comments || "",
+                            graduationYear: item.GraduationYear || item.graduationYear || "",
+                            currentEmployer: item.CurrentEmployer || item.currentEmployer || ""
+                        }));
+                        
+                        // Add to existing data
+                        alumniFeedbackData.push(...newData);
+                        
+                        // Update if currently showing alumni data
+                        if (currentFeedbackData === alumniFeedbackData) {
+                            updateDashboard();
+                        }
+                    }
+                }
+            });
+        }
+
+        // Function to export feedback data to CSV
+        function exportToCSV(feedbackType) {
+            const data = feedbackType === 'student' ? studentFeedbackData : alumniFeedbackData;
+            
+            // Prepare CSV content
+            let csvContent = "data:text/csv;charset=utf-8,";
+            
+            // Get headers based on feedback type
+            let headers = [];
+            if (feedbackType === 'student') {
+                headers = ["ID", "Name", "Date", "Rating", "Feedback", "Course", "Year"];
+            } else {
+                headers = ["ID", "Name", "Date", "Rating", "Feedback", "Graduation Year", "Current Employer"];
+            }
+            
+            csvContent += headers.join(",") + "\r\n";
+            
+            // Add data rows
+            data.forEach(item => {
+                let row = [];
+                if (feedbackType === 'student') {
+                    row = [item.id, item.name, item.date, item.rating, `"${item.feedback.replace(/"/g, '""')}"`, item.course, item.year];
+                } else {
+                    row = [item.id, item.name, item.date, item.rating, `"${item.feedback.replace(/"/g, '""')}"`, item.graduationYear, item.currentEmployer];
+                }
+                csvContent += row.join(",") + "\r\n";
+            });
+            
+            // Create download link
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `${feedbackType}_feedback_export.csv`);
+            document.body.appendChild(link);
+            
+            // Trigger download and remove link
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>

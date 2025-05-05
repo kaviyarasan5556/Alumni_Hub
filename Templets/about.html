@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KGiSL Footer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    {% load static %}
+    body {
+      background-image: url('{% static 'Photos/aboutbg.jpg' %}');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  </style>
+</head>
+{% load static %}
+<body class="text-white font-sans">
+
+  <!-- Navbar -->
+  <nav class="flex items-center w-full bg-blue-900 bg-opacity-90">
+    <!-- Logo Section -->
+    <div class="bg-white px-5 py-2 flex items-center rounded-br-xl">
+      <img src="{% static 'Photos/logo.png' %}" alt="KiTE Logo" class="h-14 w-auto" />
+    </div>
+
+    <!-- Menu Links -->
+    <div class="flex-1 text-white py-2 px-4 flex items-center justify-end">
+      <div class="flex space-x-6 text-base font-semibold">
+<<<<<<< HEAD
+        <a href="#" class="hover:bg-blue-800 px-5 py-2 rounded-md transition">Home</a>
+        <a href="#about" class="hover:bg-blue-800 px-5 py-2 rounded-md transition">About</a>
+        <a href="./alumnidirectory.html" class="hover:bg-blue-800 px-5 py-2 rounded-md transition">Alumni Directory</a>
+=======
+        <a href="{% url 'home' %}" class="block w-full h-full" onclick="showSection('Home'); return false;">Home</a>
+        <!-- <a href="{% url 'alumnidirectory' %}" class="block w-full h-full" onclick="showSection('alumnidirectory'); return false;">About</a> -->
+        <a href="{% url 'alumnidirectory' %}" class="block w-full h-full" onclick="showSection('alumnidirectory'); return false;">Alumni Directory</a>
+>>>>>>> 0891298 (final push)
+      </div>
+    </div>
+  </nav>
+
+  <!-- Footer -->
+  <footer class="px-10 py-16 bg-[#0d3b5e] bg-opacity-90">
+    <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-10">
+
+      <!-- Logo and Address -->
+      <div>
+        <img src="{% static 'Photos/logo.png' %}" alt="KGiSL Logo" class="h-20 mb-4">
+        <h3 class="text-lg font-semibold mb-2">ADDRESS</h3>
+        <p>KGiSL INSTITUTE OF TECHNOLOGY<br>
+        KGiSL Campus, 365, Thudiyalur Road,<br>
+        Saravanampatti, Coimbatore – 641035</p>
+
+        <h3 class="text-lg font-semibold mt-4">FOR ADMISSION, CONTACT:</h3>
+        <p class="mt-2">+91-9095244488, +91-9080927613,<br>0422-4419999, EXTN:9942</p>
+
+        <div class="mt-4 text-sm space-y-1">
+          <a href="#" class="hover:underline block">Terms & Conditions</a>
+          <a href="#" class="hover:underline block">Privacy Policy</a>
+        </div>
+      </div>
+
+      <!-- Academics -->
+      <div>
+        <h3 class="text-lg font-semibold mb-2">ACADEMICS</h3>
+        <ul class="space-y-1">
+          <li><a href="#" class="hover:underline">Departments</a></li>
+          <li><a href="#" class="hover:underline">Programmes</a></li>
+          <li><a href="#" class="hover:underline">Vision & Mission</a></li>
+        </ul>
+      </div>
+
+      <!-- Useful Links -->
+      <div>
+        <h3 class="text-lg font-semibold mb-2">USEFUL LINKS</h3>
+        <ul class="space-y-1">
+          <li><a href="#" class="hover:underline">Governing Council</a></li>
+          <li><a href="#" class="hover:underline">Internal Quality Assurance Cell</a></li>
+          <li><a href="#" class="hover:underline">Anti-Ragging Cell</a></li>
+          <li><a href="#" class="hover:underline">Grievance Redressal Committee</a></li>
+          <li><a href="#" class="hover:underline">News and Events</a></li>
+          <li><a href="#" class="hover:underline">Academic Calendar</a></li>
+          <li><a href="#" class="hover:underline">Learning Resources</a></li>
+          <li><a href="#" class="hover:underline">Online Grievance Redressal Form</a></li>
+          <li><a href="#" class="hover:underline">AICTE Feedback Facility - Students & Faculty</a></li>
+        </ul>
+      </div>
+
+      <!-- Buttons and Social -->
+      <div class="space-y-3">
+        <div>
+          <h3 class="text-lg font-semibold mb-2">FOLLOW US ON</h3>
+          <div class="flex space-x-3">
+            <a href="#"><img src="{% static 'Photos/fb.png' %}" class="h-8"></a>
+            <a href="#"><img src="{% static 'Photos/insta.jpg' %}" class="h-8"></a>
+            <a href="#"><img src="{% static 'Photos/linkedin.png' %}" class="h-8"></a>
+            <a href="#"><img src="{% static 'Photos/x.png' %}" class="h-8"></a>
+            <a href="#"><img src="{% static 'Photos/youtube.jpg' %}" class="h-8"></a>
+          </div>
+        </div>
+        <div class="space-y-2">
+          <button class="w-full bg-white text-[#0d3b5e] py-2 px-4 font-semibold rounded">Online Fees Payment</button>
+          <button class="w-full bg-white text-[#0d3b5e] py-2 px-4 font-semibold rounded">Ecampus</button>
+          <button class="w-full bg-white text-[#0d3b5e] py-2 px-4 font-semibold rounded">Alumni</button>
+          <button class="w-full bg-white text-[#0d3b5e] py-2 px-4 font-semibold rounded">Staff Portal</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Newsletter -->
+   
+    <div class="mt-12 flex flex-col md:flex-row items-center justify-between border-t border-white/30 pt-6">
+      <div class="flex items-center gap-4">
+        <!-- {% load static %} -->
+        <!-- <img src="{% static 'Photos/whatapp1.jpg' %}" alt="WhatsApp" class="h-12"> -->
+        <div>
+          <h3 class="text-lg font-semibold">News Letter</h3>
+        </div>
+      </div>
+      <form class="mt-4 md:mt-0 flex w-full md:w-auto">
+        <input type="email" placeholder="Your Email Address" class="p-2 w-full md:w-80 rounded-l bg-white text-black">
+        <button type="submit" class="bg-red-600 text-white px-6 py-2 rounded-r font-bold">SUBSCRIBE</button>
+      </form>
+    </div>
+      <footer class="bg-[#00334d] text-center text-white py-3 mt-10 text-sm">
+        Copyright © 2025 KGiSL Institute of Technology. All rights reserved.
+      </footer>
+    
+  </footer>
+  <!-- Copyright Footer -->
+
+
+
+</body>
+</html>

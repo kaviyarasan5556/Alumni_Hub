@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alumni Survey Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #F0F3F8;
+      margin: 0;
+      padding: 24px 16px;
+    }
+    .container {
+      max-width: 768px;
+      margin: 0 auto;
+    }
+    .section {
+      background-color: white;
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: bold;
+      color: #1a202c;
+      margin: 0;
+    }
+    h2 {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 24px;
+      color: #1a202c;
+    }
+    .form-group {
+      margin-bottom: 24px;
+    }
+    label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 4px;
+      color: #1a202c;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #cbd5e0;
+      border-radius: 4px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus,
+    input[type="date"]:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #3182ce;
+      box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.3);
+    }
+    .radio-group {
+      margin-top: 8px;
+    }
+    .radio-option {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .radio-option label {
+      margin-left: 8px;
+      margin-bottom: 0;
+    }
+    .required {
+      color: #e53e3e;
+    }
+    .text-error {
+      font-size: 14px;
+      color: #e53e3e;
+      margin-top: 16px;
+    }
+    .text-sm {
+      font-size: 14px;
+    }
+    .text-gray {
+      color: #718096;
+    }
+    .btn {
+      background-color: #3182ce;
+      color: white;
+      padding: 8px 32px;
+      border-radius: 4px;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #2c5282;
+    }
+    .btn:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.3);
+    }
+    .text-right {
+      text-align: right;
+    }
+    .email-switch {
+      color: #3182ce;
+      background: none;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 0;
+      text-decoration: underline;
+    }
+    .email-switch:hover {
+      color: #2c5282;
+    }
+    .email-record {
+      display: flex;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .email-record label {
+      margin-left: 8px;
+      font-size: 14px;
+      color: #718096;
+    }
+    
+    @media (max-width: 640px) {
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .header div {
+        margin-top: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <form id="alumniSurveyForm">
+      <!-- Header -->
+      <div class="section">
+        <div class="header">
+          <h1>Alumni Survey Form</h1>
+          <div>
+            <span class="text-sm text-gray" id="current-email">kavinkavin42255@gmail.com</span>
+            <button type="button" class="email-switch">Switch account</button>
+          </div>
+        </div>
+        <div class="email-record">
+          <input type="checkbox" id="recordEmail" name="recordEmail">
+          <label for="recordEmail">Record <span id="email-label">kavinkavin42255@gmail.com</span> as the email to be included with my response</label>
+        </div>
+        <p class="text-error">* Indicates required question</p>
+      </div>
+
+      <!-- Personal Information -->
+      <div class="section">
+        <h2>a. Personal Information</h2>
+        <div class="form-group">
+          <label for="personalName">Name <span class="required">*</span></label>
+          <input type="text" id="personalName" name="personalInfo.name" required placeholder="Your answer">
+        </div>
+
+        <div class="form-group">
+          <label for="personalYearOfGraduation">Year of Graduation <span class="required">*</span></label>
+          <input type="text" id="personalYearOfGraduation" name="personalInfo.yearOfGraduation" required placeholder="Your answer">
+        </div>
+
+        <div class="form-group">
+          <label for="personalDepartment">Department <span class="required">*</span></label>
+          <select id="personalDepartment" name="personalInfo.department" required>
+            <option value="">Choose</option>
+            <option value="Information Technology">Information Technology</option>
+            <option value="Computer Science Engineering">Computer Science Engineering</option>
+            <option value="Electronics and Communication Engineering">Electronics and Communication Engineering</option>
+            <option value="Mechanical Engineering">Mechanical Engineering</option>
+            <option value="Civil Engineering">Civil Engineering</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="personalGender">Gender <span class="required">*</span></label>
+          <select id="personalGender" name="personalInfo.gender" required>
+            <option value="">Choose</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="personalDateOfBirth">Date of Birth <span class="required">*</span></label>
+          <input type="date" id="personalDateOfBirth" name="personalInfo.dateOfBirth" required>
+        </div>
+
+        <div class="form-group">
+          <label for="personalEmailId">E-mail ID <span class="required">*</span></label>
+          <input type="email" id="personalEmailId" name="personalInfo.emailId" required placeholder="Your answer">
+        </div>
+
+        <div class="form-group">
+          <label for="personalContactNo">Contact No <span class="required">*</span></label>
+          <input type="tel" id="personalContactNo" name="personalInfo.contactNo" required placeholder="Your answer">
+        </div>
+      </div>
+
+      <!-- Higher Education Details -->
+      <div class="section">
+        <h2>Have you upgraded your Education Qualification? If yes, fill the below.</h2>
+        <div class="form-group">
+          <label for="completedEducationDegree">1. Degree/Specialization</label>
+          <select id="completedEducationDegree" name="completedEducation.degree">
+            <option value="">Choose</option>
+            <option value="B.Tech">B.Tech</option>
+            <option value="M.Tech">M.Tech</option>
+            <option value="MBA">MBA</option>
+            <option value="B.E">B.E</option>
+            <option value="Ph.D">Ph.D</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="completedEducationYear">2. Year of Graduation</label>
+          <input type="text" id="completedEducationYear" name="completedEducation.yearOfGraduation" placeholder="Your answer">
+        </div>
+
+        <div class="form-group">
+          <label for="completedEducationInstitution">3. Institution</label>
+          <input type="text" id="completedEducationInstitution" name="completedEducation.institution" placeholder="Your answer">
+        </div>
+
+        <h2>Are you pursuing any higher Education? If yes, fill the below</h2>
+        <div class="form-group">
+          <label for="pursuingEducationDegree">1. Degree/Specialization</label>
+          <select id="pursuingEducationDegree" name="pursuingEducation.degree">
+            <option value="">Choose</option>
+            <option value="B.Tech">B.Tech</option>
+            <option value="M.Tech">M.Tech</option>
+            <option value="MBA">MBA</option>
+            <option value="B.E">B.E</option>
+            <option value="Ph.D">Ph.D</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="pursuingEducationYear">2. Year of Graduation</label>
+          <input type="text" id="pursuingEducationYear" name="pursuingEducation.yearOfGraduation" placeholder="Your answer">
+        </div>
+
+        <div class="form-group">
+          <label for="pursuingEducationInstitution">3. Institution</label>
+          <input type="text" id="pursuingEducationInstitution" name="pursuingEducation.institution" placeholder="Your answer">
+        </div>
+      </div>
+
+      <!-- Employment Details -->
+      <div class="section">
+        <h2>Employment Details</h2>
+        <div class="form-group">
+          <label for="employmentOrganizationName">1. Name of the Organization Employed <span class="required">*</span></label>
+          <input type="text" id="employmentOrganizationName" name="employment.organizationName" required placeholder="Your answer">
+        </div>
+
+        <div class="form-group">
+          <label for="employmentYearOfAppointment">2. Year of Appointment <span class="required">*</span></label>
+          <input type="text" id="employmentYearOfAppointment" name="employment.yearOfAppointment" required placeholder="Your answer">
+        </div>
+
+        <div class="form-group">
+          <label for="employmentInitialDesignation">3. Designation at the time of Appointment <span class="required">*</span></label>
+          <input type="text" id="employmentInitialDesignation" name="employment.initialDesignation" required placeholder="Your answer">
+        </div>
+
+        <div class="form-group">
+          <label for="employmentCurrentDesignation">4. Current Designation <span class="required">*</span></label>
+          <input type="text" id="employmentCurrentDesignation" name="employment.currentDesignation" required placeholder="Your answer">
+        </div>
+
+        <div class="form-group">
+          <label for="employmentTotalExperience">5. Total Years of Experience <span class="required">*</span></label>
+          <input type="text" id="employmentTotalExperience" name="employment.totalExperience" required placeholder="Your answer">
+        </div>
+      </div>
+
+      <!-- Self Employment Details -->
+      <div class="section">
+        <h2>Are you Self employed? If yes, fill the below.</h2>
+        <div class="form-group">
+          <label for="selfEmploymentOrganizationName">1. Name of the Organization owned</label>
+          <input type="text" id="selfEmploymentOrganizationName" name="selfEmployment.organizationName" placeholder="Your answer">
+        </div>
+
+        <div class="form-group">
+          <label for="selfEmploymentEstablishmentYear">2. Establishment Year of your company</label>
+          <input type="text" id="selfEmploymentEstablishmentYear" name="selfEmployment.establishmentYear" placeholder="Your answer">
+        </div>
+
+        <div class="form-group">
+          <label for="selfEmploymentNumberOfEmployees">3. No. of Employees in the Company</label>
+          <input type="text" id="selfEmploymentNumberOfEmployees" name="selfEmployment.numberOfEmployees" placeholder="Your answer">
+        </div>
+      </div>
+
+      <!-- Curriculum Aspects -->
+      <div class="section">
+        <h2>b. Curriculum Aspects</h2>
+        <div class="form-group">
+          <label>To what extent is your current position related to your Program of Study?</label>
+          <div class="radio-group">
+            <div class="radio-option">
+              <input type="radio" id="programRelevanceExcellent" name="curriculumAspects.programRelevanceRating" value="Excellent">
+              <label for="programRelevanceExcellent">Excellent</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="programRelevanceVeryGood" name="curriculumAspects.programRelevanceRating" value="Very Good">
+              <label for="programRelevanceVeryGood">Very Good</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="programRelevanceGood" name="curriculumAspects.programRelevanceRating" value="Good">
+              <label for="programRelevanceGood">Good</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="programRelevanceAverage" name="curriculumAspects.programRelevanceRating" value="Average">
+              <label for="programRelevanceAverage">Average</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="programRelevanceSatisfactory" name="curriculumAspects.programRelevanceRating" value="Satisfactory">
+              <label for="programRelevanceSatisfactory">Satisfactory</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>How well do you think your UnderGraduate Experience prepared you to</label>
+        </div>
+
+        <div class="form-group">
+          <label>Be in your current position</label>
+          <div class="radio-group">
+            <div class="radio-option">
+              <input type="radio" id="currentPositionExcellent" name="curriculumAspects.currentPositionRating" value="Excellent">
+              <label for="currentPositionExcellent">Excellent</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="currentPositionVeryGood" name="curriculumAspects.currentPositionRating" value="Very Good">
+              <label for="currentPositionVeryGood">Very Good</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="currentPositionGood" name="curriculumAspects.currentPositionRating" value="Good">
+              <label for="currentPositionGood">Good</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="currentPositionAverage" name="curriculumAspects.currentPositionRating" value="Average">
+              <label for="currentPositionAverage">Average</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="currentPositionSatisfactory" name="curriculumAspects.currentPositionRating" value="Satisfactory">
+              <label for="currentPositionSatisfactory">Satisfactory</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Pursue Higher Studies</label>
+          <div class="radio-group">
+            <div class="radio-option">
+              <input type="radio" id="higherStudiesExcellent" name="curriculumAspects.higherStudiesRating" value="Excellent">
+              <label for="higherStudiesExcellent">Excellent</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="higherStudiesVeryGood" name="curriculumAspects.higherStudiesRating" value="Very Good">
+              <label for="higherStudiesVeryGood">Very Good</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="higherStudiesGood" name="curriculumAspects.higherStudiesRating" value="Good">
+              <label for="higherStudiesGood">Good</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="higherStudiesAverage" name="curriculumAspects.higherStudiesRating" value="Average">
+              <label for="higherStudiesAverage">Average</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="higherStudiesSatisfactory" name="curriculumAspects.higherStudiesRating" value="Satisfactory">
+              <label for="higherStudiesSatisfactory">Satisfactory</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Professional Skills -->
+      <div class="section">
+        <div class="form-group">
+          <label>Be an Effective Leader</label>
+          <div class="radio-group">
+            <div class="radio-option">
+              <input type="radio" id="leadershipExcellent" name="professionalSkills.leadershipRating" value="Excellent">
+              <label for="leadershipExcellent">Excellent</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="leadershipVeryGood" name="professionalSkills.leadershipRating" value="Very Good">
+              <label for="leadershipVeryGood">Very Good</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="leadershipGood" name="professionalSkills.leadershipRating" value="Good">
+              <label for="leadershipGood">Good</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="leadershipAverage" name="professionalSkills.leadershipRating" value="Average">
+              <label for="leadershipAverage">Average</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="leadershipSatisfactory" name="professionalSkills.leadershipRating" value="Satisfactory">
+              <label for="leadershipSatisfactory">Satisfactory</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Work effectively as a Member of a Team</label>
+          <div class="radio-group">
+            <div class="radio-option">
+              <input type="radio" id="teamworkExcellent" name="professionalSkills.teamworkRating" value="Excellent">
+              <label for="teamworkExcellent">Excellent</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="teamworkVeryGood" name="professionalSkills.teamworkRating" value="Very Good">
+              <label for="teamworkVeryGood">Very Good</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="teamworkGood" name="professionalSkills.teamworkRating" value="Good">
+              <label for="teamworkGood">Good</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="teamworkAverage" name="professionalSkills.teamworkRating" value="Average">
+              <label for="teamworkAverage">Average</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="teamworkSatisfactory" name="professionalSkills.teamworkRating" value="Satisfactory">
+              <label for="teamworkSatisfactory">Satisfactory</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="receivedReward">Have you received any Reward/Appreciation from an Employer? If yes, mention the reason</label>
+          <input type="text" id="receivedReward" name="professionalSkills.receivedReward" placeholder="Your answer">
+        </div>
+
+        <div class="form-group">
+          <label for="outreachActivities">Have you attended any Outreach activities? If yes, Mention the activities.</label>
+          <input type="text" id="outreachActivities" name="professionalSkills.outreachActivities" placeholder="Your answer">
+        </div>
+      </div>
+
+      <!-- Technical Skills -->
+      <div class="section">
+        <div class="form-group">
+          <label for="programImprovementRecommendations">If you want to improve Your Program of study or Department, what would be your Recommendations?</label>
+          <input type="text" id="programImprovementRecommendations" name="professionalSkills.programImprovementRecommendations" placeholder="Your answer">
+        </div>
+
+        <div class="form-group">
+          <label>Have you Applied the Technical skills of Data Science, Artificial Intelligence, Cloud Computing and Networking to provide solutions for industrial and societal requirements?</label>
+          <div class="radio-group">
+            <div class="radio-option">
+              <input type="radio" id="technicalSkills5" name="professionalSkills.technicalSkillsRating" value="5">
+              <label for="technicalSkills5">5</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="technicalSkills4" name="professionalSkills.technicalSkillsRating" value="4">
+              <label for="technicalSkills4">4</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="technicalSkills3" name="professionalSkills.technicalSkillsRating" value="3">
+              <label for="technicalSkills3">3</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="technicalSkills2" name="professionalSkills.technicalSkillsRating" value="2">
+              <label for="technicalSkills2">2</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="technicalSkills1" name="professionalSkills.technicalSkillsRating" value="1">
+              <label for="technicalSkills1">1</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>You Applied / used appropriate modern tools and IDEs for real time software development?</label>
+          <div class="radio-group">
+            <div class="radio-option">
+              <input type="radio" id="modernTools5" name="professionalSkills.modernToolsRating" value="5">
+              <label for="modernTools5">5</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="modernTools4" name="professionalSkills.modernToolsRating" value="4">
+              <label for="modernTools4">4</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="modernTools3" name="professionalSkills.modernToolsRating" value="3">
+              <label for="modernTools3">3</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="modernTools2" name="professionalSkills.modernToolsRating" value="2">
+              <label for="modernTools2">2</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="modernTools1" name="professionalSkills.modernToolsRating" value="1">
+              <label for="modernTools1">1</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="softwareDevelopmentMethodologies">Have you adapted contemporary software development methodologies and standards which suits the dynamism of Societal and Industrial nature?</label>
+          <input type="text" id="softwareDevelopmentMethodologies" name="professionalSkills.softwareDevelopmentMethodologies" placeholder="Your answer">
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="text-right">
+        <button type="submit" class="btn">Submit</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize form data
+      const formData = {
+        email: "kavinkavin42255@gmail.com",
+        recordEmail: false,
+        personalInfo: {
+          name: "",
+          yearOfGraduation: "",
+          department: "",
+          gender: "",
+          dateOfBirth: "",
+          emailId: "",
+          contactNo: "",
+        },
+        completedEducation: {
+          degree: "",
+          yearOfGraduation: "",
+          institution: "",
+        },
+        pursuingEducation: {
+          degree: "",
+          yearOfGraduation: "",
+          institution: "",
+        },
+        employment: {
+          organizationName: "",
+          yearOfAppointment: "",
+          initialDesignation: "",
+          currentDesignation: "",
+          totalExperience: "",
+        },
+        selfEmployment: {
+          organizationName: "",
+          establishmentYear: "",
+          numberOfEmployees: "",
+        },
+        professionalSkills: {
+          leadershipRating: "",
+          teamworkRating: "",
+          receivedReward: "",
+          outreachActivities: "",
+          programImprovementRecommendations: "",
+          technicalSkillsRating: "",
+          modernToolsRating: "",
+          softwareDevelopmentMethodologies: "",
+        },
+        curriculumAspects: {
+          programRelevanceRating: "",
+          undergraduateExperienceRating: "",
+          currentPositionRating: "",
+          higherStudiesRating: "",
+        },
+      };
+
+      // Email switch button functionality
+      document.querySelector('.email-switch').addEventListener('click', function() {
+        const newEmail = prompt("Enter your email address:", formData.email);
+        if (newEmail && newEmail.trim() !== "") {
+          formData.email = newEmail.trim();
+          document.getElementById('current-email').textContent = formData.email;
+          document.getElementById('email-label').textContent = formData.email;
+        }
+      });
+
+      // Record email checkbox functionality
+      document.getElementById('recordEmail').addEventListener('change', function() {
+        formData.recordEmail = this.checked;
+      });
+
+      // Form submission
+      document.getElementById('alumniSurveyForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Collect all form data
+        const formElements = this.elements;
+        for (let i = 0; i < formElements.length; i++) {
+          const element = formElements[i];
+          if (element.name && element.name !== "") {
+            if (element.type === "checkbox") {
+              if (element.name === "recordEmail") {
+                formData.recordEmail = element.checked;
+              }
+            } else if (element.type === "radio") {
+              if (element.checked) {
+                updateNestedProperty(formData, element.name, element.value);
+              }
+            } else if (element.name && element.value !== undefined) {
+              updateNestedProperty(formData, element.name, element.value);
+            }
+          }
+        }
+        
+        console.log("Form submitted with data:", formData);
+        alert("Form submitted successfully!");
+      });
+
+      // Helper function to update nested properties
+      function updateNestedProperty(obj, path, value) {
+        if (path.includes(".")) {
+          const [section, field] = path.split(".");
+          if (!obj[section]) {
+            obj[section] = {};
+          }
+          obj[section][field] = value;
+        } else {
+          obj[path] = value;
+        }
+      }
+    });
+  </script>
+</body>
+</html>

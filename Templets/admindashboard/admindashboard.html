@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    {%load static %}
+    /* Animation for dropdown */
+    .dropdown {
+      transition: all 0.3s ease-in-out;
+    }
+    body {
+      background-image: url('{% static 'Photos/aboutbg.jpg' %}'),linear-gradient(135deg, #7f9cf5 0%, #4c51bf 100%);
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    
+    /* Content container with better visibility */
+    .content-container {
+      background-color: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(5px);
+      border-radius: 0.5rem;
+    }
+    
+    /* Welcome container with transparent background */
+    .welcome-container {
+      background-color: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(3px);
+      border-radius: 0.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    /* Progress bar styling */
+    .progress-bar {
+      height: 8px;
+      border-radius: 4px;
+      background-color: #e2e8f0;
+      overflow: hidden;
+    }
+    
+    .progress-value {
+      height: 100%;
+      border-radius: 4px;
+      background-color: #3b82f6;
+    }
+  </style>
+</head>
+<body class="font-sans min-h-screen">
+
+  <!-- Navigation Bar -->
+  <nav class="bg-blue-800 py-4 shadow-md">
+    <ul class="flex justify-center gap-20 text-white font-semibold relative text-lg">
+
+      <!-- data management -->
+      <li class="relative group">
+        <div class="flex items-center gap-2 cursor-pointer">
+          <span>Data Management</span>
+          <button onclick="toggleDropdown('dataDropdown')" class="hover:bg-blue-600 px-2 py-1 rounded transition">⬇️</button>
+        </div>
+        <ul id="dataDropdown" class="dropdown absolute hidden bg-white text-gray-800 mt-2 rounded-lg shadow-lg w-44">
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-t">
+            <a href="{% url 'student_data' %}" class="block w-full h-full" onclick="showSection('studentData'); return false;">Student Data</a>
+          </li>
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-b">
+            <a href="{% url 'alumni_data' %}" class="block w-full h-full" onclick="showSection('alumniData'); return false;">Alumni Data</a>
+          </li>
+<<<<<<< HEAD
+=======
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-b">
+            <a href="{% url 'alumni_profile' %}" class="block w-full h-full" onclick="showSection('alumni_profile'); return false;">Alumni Profile</a>
+          </li>
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-b">
+            <a href="{% url 'student_profile' %}" class="block w-full h-full" onclick="showSection('student_profile'); return false;">student Profile</a>
+          </li>
+>>>>>>> 0891298 (final push)
+        </ul>
+      </li>
+
+      <!-- Student Engagement -->
+      <li class="relative group">
+        <div class="flex items-center gap-2 cursor-pointer">
+          <span>Student Engagement</span>
+          <button onclick="toggleDropdown('engagementDropdown')" class="hover:bg-blue-600 px-2 py-1 rounded transition">⬇️</button>
+        </div>
+        <ul id="engagementDropdown" class="dropdown absolute hidden bg-white text-gray-800 mt-2 rounded-lg shadow-lg w-52">
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-t">
+            <a href="{% url 'job_posting' %}" class="block w-full h-full" onclick="showSection('jobPosting'); return false;">Job Posting</a>
+          </li>
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-b">
+            <a href="{% url 'career_resource' %}" class="block w-full h-full" onclick="showSection('careerResource'); return false;">Career Resource</a>
+          </li>
+        </ul>
+      </li>
+
+      <!-- Event -->
+      <li class="relative group">
+        <div class="flex items-center gap-2 cursor-pointer">
+          <span>Events</span>
+          <button onclick="toggleDropdown('eventDropdown')" class="hover:bg-blue-600 px-2 py-1 rounded transition">⬇️</button>
+        </div>
+        <ul id="eventDropdown" class="dropdown absolute hidden bg-white text-gray-800 mt-2 rounded-lg shadow-lg w-52">
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-t">
+            <a href="{% url 'upcoming_events' %}" class="block w-full h-full" onclick="showSection('upcoming'); return false;">Upcoming Event</a>
+          </li>
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-b">
+            <a href="{% url 'conference' %}" class="block w-full h-full" onclick="showSection('conference'); return false;">Conference</a>
+          </li>
+        </ul>
+      </li>
+
+      <!-- Donation -->
+      <li class="relative group">
+        <div class="flex items-center gap-2 cursor-pointer">
+          <span>Donation</span>
+          <button onclick="toggleDropdown('donationDropdown')" class="hover:bg-blue-600 px-2 py-1 rounded transition">⬇️</button>
+        </div>
+        <ul id="donationDropdown" class="dropdown absolute hidden bg-white text-gray-800 mt-2 rounded-lg shadow-lg w-52">
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-t">
+            <a href="{% url 'donation' %}" class="block w-full h-full" onclick="showSection('donation'); return false;">Donation</a>
+          </li>
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-b">
+<<<<<<< HEAD
+            <a href="{% url 'crowdfunding' %}" class="block w-full h-full" onclick="showSection('campaign'); return false;">Financial Campaign</a>
+=======
+            <a href="{% url 'alumni_crowdfunding' %}" class="block w-full h-full" onclick="showSection('campaign'); return false;">Financial Campaign</a>
+>>>>>>> 0891298 (final push)
+          </li>
+        </ul>
+      </li>
+
+    </ul>
+  </nav>
+
+  <!-- Main Dashboard Stats Cards -->
+  <div class="max-w-6xl mx-auto mt-8 px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Students Stats Card -->
+      <div class="bg-white rounded-lg shadow-md p-6 flex items-center">
+        <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center mr-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+        </div>
+        <div class="flex-1">
+          <h3 class="text-gray-500 text-sm font-medium uppercase">TOTAL STUDENTS</h3>
+          <div class="flex items-center">
+            <span class="text-4xl font-bold text-blue-700">1,250</span>
+            <span class="ml-2 text-green-500 flex items-center text-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+              </svg>
+              12% from last year
+            </span>
+          </div>
+          <div class="mt-4">
+            <div class="flex justify-between text-sm mb-1">
+<<<<<<< HEAD
+              <span>Target: 1500</span>
+=======
+              <!-- <span>Target: 1500</span> -->
+>>>>>>> 0891298 (final push)
+              <span>75% Complete</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-value" style="width: 75%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alumni Stats Card -->
+      <div class="bg-white rounded-lg shadow-md p-6 flex items-center">
+        <div class="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center mr-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+        </div>
+        <div class="flex-1">
+          <h3 class="text-gray-500 text-sm font-medium uppercase">TOTAL ALUMNI</h3>
+          <div class="flex items-center">
+            <span class="text-4xl font-bold text-purple-700">3,750</span>
+            <span class="ml-2 text-green-500 flex items-center text-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+              </svg>
+              8% from last year
+            </span>
+          </div>
+          <div class="mt-4">
+            <div class="flex justify-between text-sm mb-1">
+<<<<<<< HEAD
+              <span>Target: 4000</span>
+=======
+              <!-- <span>Target: 4000</span> -->
+>>>>>>> 0891298 (final push)
+              <span>90% Complete</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-value" style="width: 90%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Additional Metrics Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+      <!-- Recent Enrollments Card -->
+      <div class="bg-blue-50 rounded-lg shadow-md p-5 text-center">
+        <h3 class="text-blue-700 text-lg font-semibold mb-2">Recent Enrollments</h3>
+        <div class="text-4xl font-bold text-gray-800">+125</div>
+        <div class="text-gray-600 mt-1">Last 30 days</div>
+      </div>
+      
+      <!-- Active Alumni Card -->
+      <div class="bg-green-50 rounded-lg shadow-md p-5 text-center">
+        <h3 class="text-green-700 text-lg font-semibold mb-2">Active Alumni</h3>
+        <div class="text-4xl font-bold text-gray-800">68%</div>
+        <div class="text-gray-600 mt-1">Engagement rate</div>
+      </div>
+      
+      <!-- Upcoming Events Card -->
+      <div class="bg-purple-50 rounded-lg shadow-md p-5 text-center">
+        <h3 class="text-purple-700 text-lg font-semibold mb-2">Upcoming Events</h3>
+<<<<<<< HEAD
+        <div class="text-4xl font-bold text-gray-800">12</div>
+=======
+        <div class="text-4xl font-bold text-gray-800">4</div>
+>>>>>>> 0891298 (final push)
+        <div class="text-gray-600 mt-1">Next 3 months</div>
+      </div>
+    </div>
+  </div>
+
+  <main class="max-w-5xl mx-auto mt-10 p-6">
+    <!-- Student Data -->
+    <div id="studentData" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4 text-gray-800">🎓 Student Data</h2>
+      <div class="p-6 rounded-lg shadow content-container">View and manage current student records and details.</div>
+    </div>
+  
+    <!-- Alumni Data -->
+    <div id="alumniData" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4 text-gray-800">👩‍🎓 Alumni Data</h2>
+      <div class="p-6 rounded-lg shadow content-container">Access alumni contact info and career history.</div>
+    </div>
+  
+    <!-- Job Posting -->
+    <div id="jobPosting" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4 text-gray-800">💼 Job Postings</h2>
+      <div class="p-6 rounded-lg shadow content-container">Latest job opportunities for alumni and students.</div>
+    </div>
+  
+    <!-- Career Resource -->
+    <div id="careerResource" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4 text-gray-800">📚 Career Resources</h2>
+      <div class="p-6 rounded-lg shadow content-container">Access guides, resume templates, and job prep material.</div>
+    </div>
+  
+    <!-- Upcoming Events -->
+    <div id="upcoming" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4 text-gray-800">📅 Upcoming Events</h2>
+      <div class="p-6 rounded-lg shadow content-container">Check out the upcoming alumni events and reunions.</div>
+    </div>
+  
+    <!-- Conference -->
+    <div id="conference" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4 text-gray-800">🎤 Conferences</h2>
+      <div class="p-6 rounded-lg shadow content-container">Participate in alumni-hosted academic or tech conferences.</div>
+    </div>
+  
+    <!-- Donation -->
+    <div id="donation" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4 text-gray-800">🙏 Donation</h2>
+      <div class="p-6 rounded-lg shadow content-container">Support university initiatives through one-time or recurring donations.</div>
+    </div>
+  
+    <!-- Financial Campaign -->
+    <div id="campaign" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4 text-gray-800">💰 Financial Campaigns</h2>
+      <div class="p-6 rounded-lg shadow content-container">Contribute to scholarship funds, research drives, and more.</div>
+    </div>
+    
+    <!-- Welcome message with more transparent background -->
+    <!-- <div id="welcome" class="p-8 rounded-lg shadow-lg welcome-container text-center">
+      <h1 class="text-3xl font-bold text-white mb-4 text-shadow">Welcome to Admin Dashboard</h1>
+    </div> -->
+  </main>
+  
+  <!-- JS Logic -->
+  <script>
+    // Show welcome message by default
+    document.getElementById('welcome').style.display = 'block';
+    
+    function toggleDropdown(id) {
+      document.querySelectorAll('.dropdown').forEach(d => d.classList.add('hidden'));
+      document.getElementById(id).classList.toggle('hidden');
+    }
+
+    function showSection(id) {
+      // Hide welcome section
+      document.getElementById('welcome').style.display = 'none';
+      
+      // Show the selected section
+      document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+      document.getElementById(id).classList.remove('hidden');
+    }
+
+    // Close dropdown if click outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('li')) {
+        document.querySelectorAll('.dropdown').forEach(d => d.classList.add('hidden'));
+      }
+    });
+    
+    // Add text shadow style dynamically
+    document.head.insertAdjacentHTML('beforeend', `
+      <style>
+        .text-shadow {
+          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+      </style>
+    `);
+  </script>
+
+</body>
+</html>

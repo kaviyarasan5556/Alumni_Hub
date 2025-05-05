@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Data</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body class="p-6 relative">
+
+  <!-- Page Title -->
+  <h1 class="text-3xl font-bold text-center mb-6">Student Data</h1>
+
+  <!-- Export Button - Top Right with Scale Animation -->
+  <div class="absolute top-6 right-6">
+    <button
+      onclick="exportToExcel()"
+      class="bg-green-500 text-white px-4 py-2 rounded transform transition-transform duration-200 hover:scale-105 active:scale-95"
+    >
+      Export
+    </button>
+  </div>
+
+  <!-- Filters Section -->
+  <div class="flex space-x-4 mb-4 mt-12">
+    <input
+      type="text"
+      id="nameFilter"
+      placeholder="Search by Name"
+      class="border p-2 rounded"
+    />
+    <input
+      type="number"
+      id="cgpaFilter"
+      placeholder="Min CGPA"
+      class="border p-2 rounded"
+    />
+    <select id="standingArrearsFilter" class="border p-2 rounded">
+      <option value="">Standing Arrears</option>
+      <option value="0">0</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+    </select>
+    <input
+      type="number"
+      id="attendanceFilter"
+      placeholder="Min Attendance %"
+      class="border p-2 rounded"
+    />
+    <button
+      onclick="applyFilters()"
+      class="bg-blue-500 text-white px-4 py-2 rounded transition-all duration-200 active:bg-blue-700"
+    >
+      Apply
+    </button>
+  </div>
+
+  <!-- Student Data Table -->
+  <table class="w-full border-collapse border border-gray-300">
+    <thead>
+      <tr class="bg-gray-200">
+        <th class="border p-2">Name</th>
+        <th class="border p-2">Roll No</th>
+        <th class="border p-2">CGPA</th>
+        <th class="border p-2">Standing Arrears</th>
+        <th class="border p-2">History of Arrears</th>
+        <th class="border p-2">Attendance %</th>
+      </tr>
+    </thead>
+    <tbody id="studentTable">
+      <!-- Rows will be populated by JavaScript -->
+    </tbody>
+  </table>
+
+  <!-- Scripts -->
+  <script>
+    const studentData = [
+<<<<<<< HEAD
+      { name: "Harish Kumar", rollNo: "CSE001", cgpa: 8.2, standingArrears: 0, historyArrears: 1, attendance: 85 },
+      { name: "Priya Sharma", rollNo: "CSE002", cgpa: 7.5, standingArrears: 1, historyArrears: 2, attendance: 78 },
+      { name: "Adithya Verma", rollNo: "CSE003", cgpa: 9.0, standingArrears: 0, historyArrears: 0, attendance: 92 },
+      { name: "Nehru", rollNo: "CSE004", cgpa: 6.8, standingArrears: 2, historyArrears: 3, attendance: 70 },
+      { name: "Sanjay", rollNo: "CSE005", cgpa: 7.9, standingArrears: 0, historyArrears: 1, attendance: 88 },
+      { name: "Anandh", rollNo: "CSE006", cgpa: 7.2, standingArrears: 1, historyArrears: 2, attendance: 80 },
+      { name: "Ravi Kannan", rollNo: "CSE007", cgpa: 8.5, standingArrears: 0, historyArrears: 0, attendance: 90 },
+      { name: "Simran", rollNo: "CSE008", cgpa: 6.9, standingArrears: 2, historyArrears: 4, attendance: 65 },
+      { name: "Arjunan", rollNo: "CSE009", cgpa: 8.8, standingArrears: 0, historyArrears: 1, attendance: 87 },
+      { name: "Deepika", rollNo: "CSE010", cgpa: 7.6, standingArrears: 1, historyArrears: 2, attendance: 75 },
+      { name: "Karnan", rollNo: "CSE011", cgpa: 9.1, standingArrears: 0, historyArrears: 0, attendance: 93 },
+      { name: "Meghana", rollNo: "CSE012", cgpa: 7.0, standingArrears: 2, historyArrears: 3, attendance: 72 },
+      { name: "Naveen", rollNo: "CSE013", cgpa: 8.0, standingArrears: 1, historyArrears: 1, attendance: 85 },
+      { name: "Priyanka", rollNo: "CSE014", cgpa: 7.4, standingArrears: 1, historyArrears: 2, attendance: 77 },
+      { name: "Vikram", rollNo: "CSE015", cgpa: 8.3, standingArrears: 0, historyArrears: 0, attendance: 89 },
+      { name: "Sunitha", rollNo: "CSE016", cgpa: 6.7, standingArrears: 2, historyArrears: 4, attendance: 68 },
+      { name: "Akash", rollNo: "CSE017", cgpa: 7.8, standingArrears: 1, historyArrears: 1, attendance: 80 },
+      { name: "Swati", rollNo: "CSE018", cgpa: 8.6, standingArrears: 0, historyArrears: 1, attendance: 88 },
+      { name: "Harsath Khan", rollNo: "CSE019", cgpa: 7.3, standingArrears: 1, historyArrears: 2, attendance: 74 },
+      { name: "Arnav", rollNo: "CSE020", cgpa: 9.2, standingArrears: 0, historyArrears: 0, attendance: 95 },
+=======
+      { name: "Abinesh", rollNo: "21CSA01", cgpa: 8.2, standingArrears: 0, historyArrears: 1, attendance: 85 },
+      { name: "Abisheak", rollNo: "21CSA02", cgpa: 7.5, standingArrears: 1, historyArrears: 2, attendance: 78 },
+      { name: "abisheak Ramesh", rollNo: "21CSA03", cgpa: 9.0, standingArrears: 0, historyArrears: 0, attendance: 92 },
+      { name: "Adithya kumar", rollNo: "21CSA04", cgpa: 6.8, standingArrears: 2, historyArrears: 3, attendance: 70 },
+      { name: "Adharsh", rollNo: "21CSA05", cgpa: 7.9, standingArrears: 0, historyArrears: 1, attendance: 88 },
+      { name: "Akash", rollNo: "21CSA06", cgpa: 7.2, standingArrears: 1, historyArrears: 2, attendance: 80 },
+      { name: "Anantha Ruban", rollNo: "21CSA07", cgpa: 8.5, standingArrears: 0, historyArrears: 0, attendance: 90 },
+      { name: "Aravind", rollNo: "21CSA08", cgpa: 6.9, standingArrears: 2, historyArrears: 4, attendance: 65 },
+      { name: "Arjun Rishi", rollNo: "21CSA09", cgpa: 8.8, standingArrears: 0, historyArrears: 1, attendance: 87 },
+      { name: "Ashwin", rollNo: "21CSA10", cgpa: 7.6, standingArrears: 1, historyArrears: 2, attendance: 75 },
+      { name: "Babu raj", rollNo: "21CSA11", cgpa: 9.1, standingArrears: 0, historyArrears: 0, attendance: 93 },
+      { name: "Danny", rollNo: "21CSA12", cgpa: 7.0, standingArrears: 2, historyArrears: 3, attendance: 72 },
+      { name: "Deveraj", rollNo: "21CSA13", cgpa: 8.0, standingArrears: 1, historyArrears: 1, attendance: 85 },
+      { name: "Dhivin", rollNo: "21CSA14", cgpa: 7.4, standingArrears: 1, historyArrears: 2, attendance: 77 },
+      { name: "Dinesh Kanna", rollNo: "21CSA15", cgpa: 8.3, standingArrears: 0, historyArrears: 0, attendance: 89 },
+      { name: "Divya Prakash", rollNo: "21CSA16", cgpa: 6.7, standingArrears: 2, historyArrears: 4, attendance: 68 },
+      { name: "Gokul P", rollNo: "21CSA17", cgpa: 7.8, standingArrears: 1, historyArrears: 1, attendance: 80 },
+      { name: "Gokulavasan", rollNo: "21CSA18", cgpa: 8.6, standingArrears: 0, historyArrears: 1, attendance: 88 },
+      { name: "Hariharan", rollNo: "21CSA19", cgpa: 7.3, standingArrears: 1, historyArrears: 2, attendance: 74 },
+      { name: "Harsath", rollNo: "21CSA20", cgpa: 9.2, standingArrears: 0, historyArrears: 0, attendance: 95 },
+>>>>>>> 0891298 (final push)
+    ];
+
+    let filteredData = [...studentData];
+
+    function applyFilters() {
+      const nameFilter = document.getElementById("nameFilter").value.toLowerCase();
+      const cgpaFilter = parseFloat(document.getElementById("cgpaFilter").value) || 0;
+      const standingArrearsFilter = parseInt(document.getElementById("standingArrearsFilter").value) || "";
+      const attendanceFilter = parseInt(document.getElementById("attendanceFilter").value) || 0;
+
+      filteredData = studentData.filter((student) =>
+        (nameFilter === "" || student.name.toLowerCase().includes(nameFilter)) &&
+        (cgpaFilter === 0 || student.cgpa >= cgpaFilter) &&
+        (standingArrearsFilter === "" || student.standingArrears === standingArrearsFilter) &&
+        (attendanceFilter === 0 || student.attendance >= attendanceFilter)
+      );
+
+      renderTable();
+    }
+
+    function renderTable() {
+      const tableBody = document.getElementById("studentTable");
+      tableBody.innerHTML = "";
+      filteredData.forEach((student) => {
+        const row = `
+          <tr class="text-center">
+            <td class="border p-2">${student.name}</td>
+            <td class="border p-2">${student.rollNo}</td>
+            <td class="border p-2">${student.cgpa}</td>
+            <td class="border p-2">${student.standingArrears}</td>
+            <td class="border p-2">${student.historyArrears}</td>
+            <td class="border p-2">${student.attendance}</td>
+          </tr>
+        `;
+        tableBody.insertAdjacentHTML("beforeend", row);
+      });
+    }
+
+    function exportToExcel() {
+      const worksheet = XLSX.utils.json_to_sheet(filteredData);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Filtered Students");
+      XLSX.writeFile(workbook, "Filtered_Student_Data.xlsx");
+    }
+
+    // Initial render
+    renderTable();
+  </script>
+
+</body>
+</html>

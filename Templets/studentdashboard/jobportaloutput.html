@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Job Listings</title>
+  <style>
+    :root {
+      --primary-color: #3366ff;
+      --primary-dark: #2952cc;
+      --primary-light: #6699ff;
+      --secondary-color: #f0f6ff;
+      --accent-color: #ff6633;
+      --success-color: #2ecc71;
+      --warning-color: #f1c40f;
+      --error-color: #e74c3c;
+      --text-primary: #333;
+      --text-secondary: #666;
+      --text-tertiary: #999;
+      --bg-light: #f7f9fc;
+      --bg-white: #ffffff;
+      --border-light: #eaeef5;
+      --border-radius: 12px;
+      --border-radius-sm: 8px;
+      --box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      --box-shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+      --transition: all 0.25s ease;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      margin: 0;
+      background-color: var(--bg-light);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
+    header {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+      color: white;
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    
+    .header-subtitle {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto 1.5rem;
+    }
+    
+    .search-bar {
+      background: var(--bg-white);
+      border-radius: var(--border-radius);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      max-width: 800px;
+      margin: 0 auto;
+      box-shadow: var(--box-shadow);
+    }
+    
+    .search-input {
+      border: none;
+      background: transparent;
+      flex-grow: 1;
+      font-size: 1rem;
+      padding: 0.5rem;
+      outline: none;
+    }
+    
+    .search-button {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: var(--border-radius-sm);
+      padding: 0.5rem 1.5rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .search-button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+    
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+    
+    .filters {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .filter-group {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    
+    .filter-button {
+      background: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--border-radius-sm);
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .filter-button:hover, .filter-button.active {
+      background: var(--secondary-color);
+      color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+    
+    .result-count {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    
+    .job-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 1.5rem;
+    }
+    
+    .job-card {
+      background: var(--bg-white);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--box-shadow-sm);
+      transition: var(--transition);
+      border: 1px solid var(--border-light);
+    }
+    
+    .job-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--box-shadow);
+    }
+    
+    .job-header {
+      padding: 1.5rem;
+      position: relative;
+      border-bottom: 1px solid var(--border-light);
+    }
+    
+    .company-badge {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 50px;
+      height: 50px;
+      background: var(--secondary-color);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.25rem;
+      color: var(--primary-color);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    
+    .job-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      padding-right: 60px;
+      color: var(--text-primary);
+    }
+    
+    .company-name {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .job-content {
+      padding: 1.5rem;
+    }
+    
+    .job-highlights {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .highlight-item {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .highlight-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-tertiary);
+      margin-bottom: 0.25rem;
+    }
+    
+    .highlight-value {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      list-style: none;
+      margin-bottom: 1.5rem;
+    }
+    
+    .skills-list li {
+      background-color: var(--secondary-color);
+      color: var(--primary-color);
+      padding: 0.4rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    
+    .job-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border-light);
+      padding: 1rem 1.5rem;
+      background: #fcfcfd;
+    }
+    
+    .posted-date {
+      font-size: 0.85rem;
+      color: var(--text-tertiary);
+    }
+    
+    .job-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+    
+    .apply-btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: var(--border-radius-sm);
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .apply-btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 3px 8px rgba(51, 102, 255, 0.3);
+    }
+    
+    .save-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--border-radius-sm);
+      border: 1px solid var(--border-light);
+      background: var(--bg-white);
+      color: var(--text-tertiary);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .save-btn:hover {
+      color: var(--primary-color);
+      border-color: var(--primary-color);
+      background: var(--secondary-color);
+    }
+    
+    .featured-tag {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: var(--accent-color);
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.25rem 0.75rem;
+      border-top-left-radius: var(--border-radius);
+      border-bottom-right-radius: var(--border-radius-sm);
+    }
+    
+    .job-type-tag {
+      background: rgba(51, 102, 255, 0.1);
+      color: var(--primary-color);
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      margin-left: 0.5rem;
+    }
+    
+    footer {
+      background: var(--bg-white);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      border-top: 1px solid var(--border-light);
+      margin-top: 3rem;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .footer-logo {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    
+    .footer-links a:hover {
+      color: var(--primary-color);
+    }
+    
+    .copyright {
+      color: var(--text-tertiary);
+      font-size: 0.9rem;
+    }
+    
+    /* Responsive Design */
+    @media (min-width: 640px) {
+      .job-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .job-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    @media (max-width: 639px) {
+      header {
+        padding: 1.5rem 1rem;
+      }
+      
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      .search-bar {
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1rem;
+      }
+      
+      .search-button {
+        width: 100%;
+      }
+      
+      .job-highlights {
+        grid-template-columns: 1fr;
+      }
+      
+      .filters {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .job-card {
+      animation: fadeIn 0.3s ease-out;
+      animation-fill-mode: both;
+    }
+    
+    .job-card:nth-child(1) { animation-delay: 0.1s; }
+    .job-card:nth-child(2) { animation-delay: 0.2s; }
+    .job-card:nth-child(3) { animation-delay: 0.3s; }
+    .job-card:nth-child(4) { animation-delay: 0.4s; }
+    .job-card:nth-child(5) { animation-delay: 0.5s; }
+    .job-card:nth-child(6) { animation-delay: 0.6s; }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <header>
+    <div class="header-content">
+      <h1>Find Your Dream Job</h1>
+      <p class="header-subtitle">Browse through our curated list of top tech opportunities from leading companies</p>
+      
+      <div class="search-bar">
+        <input type="text" class="search-input" placeholder="Search for jobs, companies, or keywords...">
+        <button class="search-button">Search</button>
+      </div>
+    </div>
+  </header>
+  
+  <!-- Main Content -->
+  <main>
+    <div class="filters">
+      <div class="filter-group">
+        <button class="filter-button active">All Jobs</button>
+        <button class="filter-button">Remote</button>
+        <button class="filter-button">Full-time</button>
+        <button class="filter-button">Contract</button>
+      </div>
+      <div class="result-count">Showing 6 jobs</div>
+    </div>
+    
+    <div class="job-grid">
+      <!-- Job Card 1 -->
+      {% for job in jobs %}
+    <div class="job-card bg-white p-6 rounded-2xl shadow-lg transition-transform hover:scale-105">
+      <div class="job-header mb-4">
+        <div class="flex justify-between items-center">
+          <div class="featured-tag bg-yellow-400 text-xs px-2 py-1 rounded-full">Featured</div>
+          <div class="company-badge bg-blue-600 text-white font-bold px-3 py-1 rounded-full">
+            {{ job.job_company|slice:":2" }}
+          </div>
+        </div>
+        <h2 class="job-title text-xl font-bold mt-3 text-gray-800">{{ job.job_title }}</h2>
+        <div class="company-name text-gray-600">
+          {{ job.job_company }}
+          <span class="job-type-tag bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full ml-2">
+            {{ job.job_type }}
+          </span>
+        </div>
+      </div>
+      
+      <div class="job-content">
+        <div class="job-highlights grid grid-cols-2 gap-2 text-sm text-gray-700">
+          <div class="highlight-item">
+            <strong>Location:</strong> {{ job.job_location }}
+          </div>
+          <div class="highlight-item">
+            <strong>Salary:</strong> ₹{{ job.job_salary }}
+          </div>
+          <div class="highlight-item">
+            <strong>Experience:</strong> {{ job.job_experience }}
+          </div>
+          <div class="highlight-item">
+            <strong>Posted:</strong> 2 days ago
+          </div>
+        </div>
+        
+        <div class="mt-4">
+          <h3 class="font-semibold text-sm text-gray-800">Skills:</h3>
+          <ul class="skills-list flex flex-wrap gap-2 mt-2">
+            {% for skill in job.skills_list %}
+              <li class="bg-gray-200 px-2 py-1 rounded text-xs">{{ skill }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div class="mt-4">
+          <h3 class="font-semibold text-sm text-gray-800">Description:</h3>
+          <p class="text-sm text-gray-600 mt-1">{{ job.job_description }}</p>
+        </div>
+      </div>
+      
+      <div class="job-footer mt-4 flex justify-between items-center">
+        <div class="posted-date text-sm text-gray-500">April 28, 2025</div>
+        <div class="job-actions flex gap-2">
+          <button class="apply-btn bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm">Apply Now</button>
+          <button class="save-btn p-2 bg-gray-200 rounded hover:bg-gray-300">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+      
+      <!-- Job Card 3 -->
+      <div class="job-card">
+        <div class="job-header">
+          <div class="company-badge">NS</div>
+          <h2 class="job-title">Backend Engineer</h2>
+          <div class="company-name">
+            NextStack Technologies
+            <span class="job-type-tag">Full-time</span>
+          </div>
+        </div>
+        
+        <div class="job-content">
+          <div class="job-highlights">
+            <div class="highlight-item">
+              <div class="highlight-label">Location</div>
+              <div class="highlight-value">Bangalore, India</div>
+            </div>
+            
+            <div class="highlight-item">
+              <div class="highlight-label">Salary</div>
+              <div class="highlight-value">₹10,00,000 - ₹14,00,000</div>
+            </div>
+            
+            <div class="highlight-item">
+              <div class="highlight-label">Experience</div>
+              <div class="highlight-value">4-6 years</div>
+            </div>
+            
+            <div class="highlight-item">
+              <div class="highlight-label">Posted</div>
+              <div class="highlight-value">3 days ago</div>
+            </div>
+          </div>
+          
+          <ul class="skills-list">
+            <li>Node.js</li>
+            <li>MongoDB</li>
+            <li>AWS</li>
+            <li>Microservices</li>
+          </ul>
+        </div>
+        
+        <div class="job-footer">
+          <div class="posted-date">April 26, 2025</div>
+          <div class="job-actions">
+            <button class="apply-btn">Apply Now</button>
+            <button class="save-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Job Card 4 -->
+      <div class="job-card">
+        <div class="job-header">
+          <div class="featured-tag">Featured</div>
+          <div class="company-badge">IN</div>
+          <h2 class="job-title">Data Scientist</h2>
+          <div class="company-name">
+            InnovateAI
+            <span class="job-type-tag">Hybrid</span>
+          </div>
+        </div>
+        
+        <div class="job-content">
+          <div class="job-highlights">
+            <div class="highlight-item">
+              <div class="highlight-label">Location</div>
+              <div class="highlight-value">Mumbai, India</div>
+            </div>
+            
+            <div class="highlight-item">
+              <div class="highlight-label">Salary</div>
+              <div class="highlight-value">₹12,00,000 - ₹18,00,000</div>
+            </div>
+            
+            <div class="highlight-item">
+              <div class="highlight-label">Experience</div>
+              <div class="highlight-value">3-7 years</div>
+            </div>
+            
+            <div class="highlight-item">
+              <div class="highlight-label">Posted</div>
+              <div class="highlight-value">5 days ago</div>
+            </div>
+          </div>
+          
+          <ul class="skills-list">
+            <li>Python</li>
+            <li>Machine Learning</li>
+            <li>TensorFlow</li>
+            <li>SQL</li>
+          </ul>
+        </div>
+        
+        <div class="job-footer">
+          <div class="posted-date">April 24, 2025</div>
+          <div class="job-actions">
+            <button class="apply-btn">Apply Now</button>
+            <button class="save-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Job Card 5 -->
+      <div class="job-card">
+        <div class="job-header">
+          <div class="company-badge">SS</div>
+          <h2 class="job-title">DevOps Engineer</h2>
+          <div class="company-name">
+            SecureServe Solutions
+            <span class="job-type-tag">Contract</span>
+          </div>
+        </div>
+        
+        <div class="job-content">
+          <div class="job-highlights">
+            <div class="highlight-item">
+              <div class="highlight-label">Location</div>
+              <div class="highlight-value">Remote (India)</div>
+            </div>
+            
+            <div class="highlight-item">
+              <div class="highlight-label">Salary</div>
+              <div class="highlight-value">₹8,00,000 - ₹12,00,000</div>
+            </div>
+            
+            <div class="highlight-item">
+              <div class="highlight-label">Experience</div>
+              <div class="highlight-value">2-5 years</div>
+            </div>
+            
+            <div class="highlight-item">
+              <div class="highlight-label">Posted</div>
+              <div class="highlight-value">1 day ago</div>
+            </div>
+          </div>
+          
+          <ul class="skills-list">
+            <li>Docker</li>
+            <li>Kubernetes</li>
+            <li>CI/CD</li>
+            <li>Linux</li>
+          </ul>
+        </div>
+        
+        <div class="job-footer">
+          <div class="posted-date">April 29, 2025</div>
+          <div class="job-actions">
+            <button class="apply-btn">Apply Now</button>
+            <button class="save-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Job Card 6 -->
+      <div class="job-card">
+        <div class="job-header">
+          <div class="company-badge">SW</div>
+          <h2 class="job-title">Mobile App Developer</h2>
+          <div class="company-name">
+            SwiftWare Labs
+            <span class="job-type-tag">Full-time</span>
+          </div>
+        </div>
+        
+        <div class="job-content">
+          <div class="job-highlights">
+            <div class="highlight-item">
+              <div class="highlight-label">Location</div>
+              <div class="highlight-value">Hyderabad, India</div>
+            </div>
+            
+            <div class="highlight-item">
+              <div class="highlight-label">Salary</div>
+              <div class="highlight-value">₹7,00,000 - ₹11,00,000</div>
+            </div>
+            
+            <div class="highlight-item">
+              <div class="highlight-label">Experience</div>
+              <div class="highlight-value">2-5 years</div>
+            </div>
+            
+            <div class="highlight-item">
+              <div class="highlight-label">Posted</div>
+              <div class="highlight-value">4 days ago</div>
+            </div>
+          </div>
+          
+          <ul class="skills-list">
+            <li>Flutter</li>
+            <li>React Native</li>
+            <li>Firebase</li>
+            <li>UI/UX</li>
+          </ul>
+        </div>
+        
+        <div class="job-footer">
+          <div class="posted-date">April 25, 2025</div>
+          <div class="job-actions">
+            <button class="apply-btn">Apply Now</button>
+            <button class="save-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Footer Section -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+        </svg>
+        JobConnect
+      </div>
+      
+      <div class="footer-links">
+        <a href="#">About Us</a>
+        <a href="#">For Employers</a>
+        <a href="#">Success Stories</a>
+        <a href="#">Career Advice</a>
+        <a href="#">Contact Us</a>
+      </div>
+      
+      <div class="copyright">
+        &copy; 2025 JobConnect. All rights reserved.
+      </div>
+    </div>
+  </footer>
+  
+  <script>
+    // Simple interactive elements
+    document.querySelectorAll('.apply-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        alert("Application submitted!");
+      });
+    });
+    
+    document.querySelectorAll('.save-btn').forEach(button => {
+      button.addEventListener('click', function() {
+        this.classList.toggle('active');
+        alert("Job saved to favorites!");
+      });
+    });
+    
+    document.querySelectorAll('.filter-button').forEach(button => {
+      button.addEventListener('click', function() {
+        document.querySelectorAll('.filter-button').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        this.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

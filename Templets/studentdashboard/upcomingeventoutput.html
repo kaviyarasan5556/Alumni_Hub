@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Upcoming Events</title>
+  <style>
+    :root {
+      --primary-color: #3366ff;
+      --primary-dark: #2952cc;
+      --secondary-color: #f0f6ff;
+      --accent-color: #ff6633;
+      --text-primary: #333;
+      --text-secondary: #666;
+      --text-tertiary: #999;
+      --bg-light: #f7f9fc;
+      --bg-white: #ffffff;
+      --border-light: #eaeef5;
+      --border-radius: 12px;
+      --border-radius-sm: 8px;
+      --box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      --transition: all 0.25s ease;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+    
+    header {
+      background: linear-gradient(135deg, var(--primary-color) 0%, #4f83ff 100%);
+      color: white;
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    
+    .header-subtitle {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto 1.5rem;
+    }
+    
+    .search-bar {
+      background: var(--bg-white);
+      border-radius: var(--border-radius);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      max-width: 600px;
+      margin: 0 auto;
+      box-shadow: var(--box-shadow);
+    }
+    
+    .search-input {
+      border: none;
+      background: transparent;
+      flex-grow: 1;
+      font-size: 1rem;
+      padding: 0.5rem;
+      outline: none;
+    }
+    
+    .search-button {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: var(--border-radius-sm);
+      padding: 0.5rem 1.5rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .search-button:hover {
+      background: var(--primary-dark);
+    }
+    
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .event-card {
+      background: var(--bg-white);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+    }
+    
+    .event-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .event-image {
+      height: 180px;
+      background-color: var(--secondary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    
+    .event-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .event-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 40px;
+      height: 40px;
+      background: var(--secondary-color);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1rem;
+      color: var(--primary-color);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    
+    .featured-tag {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: var(--accent-color);
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.25rem 0.75rem;
+      border-top-left-radius: var(--border-radius);
+      border-bottom-right-radius: var(--border-radius-sm);
+    }
+    
+    .event-content {
+      padding: 1.25rem;
+    }
+    
+    .event-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--text-primary);
+    }
+    
+    .event-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+    
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    
+    .info-icon {
+      color: var(--primary-color);
+      font-size: 1rem;
+      margin-top: 3px;
+    }
+    
+    .document-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--primary-color);
+      text-decoration: none;
+      padding: 0.5rem;
+      border-radius: var(--border-radius-sm);
+      background-color: var(--secondary-color);
+      margin-bottom: 0.75rem;
+      transition: var(--transition);
+    }
+    
+    .document-link:hover {
+      background-color: rgba(51, 102, 255, 0.2);
+    }
+    
+    .event-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border-light);
+    }
+    
+    .register-btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: var(--border-radius-sm);
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .register-btn:hover {
+      background-color: var(--primary-dark);
+    }
+    
+    .event-type {
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.25rem 0.5rem;
+      background-color: var(--secondary-color);
+      color: var(--primary-color);
+      border-radius: 4px;
+    }
+    
+    footer {
+      background: var(--bg-white);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      border-top: 1px solid var(--border-light);
+      margin-top: 3rem;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .footer-logo {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+    
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    
+    .footer-links a:hover {
+      color: var(--primary-color);
+    }
+    
+    .copyright {
+      color: var(--text-tertiary);
+      font-size: 0.9rem;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .search-bar {
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1rem;
+      }
+      
+      .search-button {
+        width: 100%;
+      }
+      
+      .events-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .event-card {
+      animation: fadeIn 0.3s ease-out;
+      animation-fill-mode: both;
+    }
+    
+    .event-card:nth-child(1) { animation-delay: 0.1s; }
+    .event-card:nth-child(2) { animation-delay: 0.2s; }
+    .event-card:nth-child(3) { animation-delay: 0.3s; }
+    .event-card:nth-child(4) { animation-delay: 0.4s; }
+    .event-card:nth-child(5) { animation-delay: 0.5s; }
+    .event-card:nth-child(6) { animation-delay: 0.6s; }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <header>
+    <div class="header-content">
+      <h1>Upcoming Events</h1>
+      <p class="header-subtitle">Discover exciting events happening near you</p>
+      
+      <div class="search-bar">
+        <input type="text" class="search-input" placeholder="Search for events...">
+        <button class="search-button">Search</button>
+      </div>
+    </div>
+  </header>
+  
+  <!-- Main Content -->
+  <main>
+    <div class="events-grid">
+      <!-- Event Card 1 -->
+      <div class="event-card">
+        <div class="event-image">
+          <div class="featured-tag">Featured</div>
+          <div class="event-badge">TC</div>
+          <img src="/api/placeholder/400/200" alt="Tech Conference 2025">
+        </div>
+        <div class="event-content">
+          <h2 class="event-title">Tech Conference 2025</h2>
+          <div class="event-info">
+            <div class="info-item">
+              <div class="info-icon">📅</div>
+              <div>May 15, 2025</div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">📍</div>
+              <div>Convention Center</div>
+            </div>
+          </div>
+          
+          <a href="#" class="document-link">
+            <div class="info-icon">📄</div>
+            <div>Conference Schedule</div>
+          </a>
+          
+          <div class="event-footer">
+            <span class="event-type">Conference</span>
+            <button class="register-btn">Register</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Event Card 2 -->
+      <div class="event-card">
+        <div class="event-image">
+          <div class="event-badge">DW</div>
+          <img src="/api/placeholder/400/200" alt="Design Workshop">
+        </div>
+        <div class="event-content">
+          <h2 class="event-title">Design Workshop</h2>
+          <div class="event-info">
+            <div class="info-item">
+              <div class="info-icon">📅</div>
+              <div>May 20, 2025</div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">📍</div>
+              <div>Design Studio</div>
+            </div>
+          </div>
+          
+          <a href="#" class="document-link">
+            <div class="info-icon">📄</div>
+            <div>Workshop Materials</div>
+          </a>
+          
+          <div class="event-footer">
+            <span class="event-type">Workshop</span>
+            <button class="register-btn">Register</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Event Card 3 -->
+      <div class="event-card">
+        <div class="event-image">
+          <div class="event-badge">SM</div>
+          <img src="/api/placeholder/400/200" alt="Startup Meetup">
+        </div>
+        <div class="event-content">
+          <h2 class="event-title">Startup Meetup</h2>
+          <div class="event-info">
+            <div class="info-item">
+              <div class="info-icon">📅</div>
+              <div>May 25, 2025</div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">📍</div>
+              <div>Innovation Hub</div>
+            </div>
+          </div>
+          
+          <a href="#" class="document-link">
+            <div class="info-icon">📄</div>
+            <div>Attendee Information</div>
+          </a>
+          
+          <div class="event-footer">
+            <span class="event-type">Meetup</span>
+            <button class="register-btn">Register</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Event Card 4 -->
+      <div class="event-card">
+        <div class="event-image">
+          <div class="featured-tag">Featured</div>
+          <div class="event-badge">WD</div>
+          <img src="/api/placeholder/400/200" alt="Web Dev Summit">
+        </div>
+        <div class="event-content">
+          <h2 class="event-title">Web Dev Summit</h2>
+          <div class="event-info">
+            <div class="info-item">
+              <div class="info-icon">📅</div>
+              <div>June 1, 2025</div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">📍</div>
+              <div>Tech Campus</div>
+            </div>
+          </div>
+          
+          <a href="#" class="document-link">
+            <div class="info-icon">📄</div>
+            <div>Summit Agenda</div>
+          </a>
+          
+          <div class="event-footer">
+            <span class="event-type">Conference</span>
+            <button class="register-btn">Register</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Event Card 5 -->
+      <div class="event-card">
+        <div class="event-image">
+          <div class="event-badge">AI</div>
+          <img src="/api/placeholder/400/200" alt="AI Workshop Series">
+        </div>
+        <div class="event-content">
+          <h2 class="event-title">AI Workshop Series</h2>
+          <div class="event-info">
+            <div class="info-item">
+              <div class="info-icon">📅</div>
+              <div>June 5, 2025</div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">📍</div>
+              <div>Virtual</div>
+            </div>
+          </div>
+          
+          <a href="#" class="document-link">
+            <div class="info-icon">📄</div>
+            <div>Workshop Syllabus</div>
+          </a>
+          
+          <div class="event-footer">
+            <span class="event-type">Workshop</span>
+            <button class="register-btn">Register</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Event Card 6 -->
+      <div class="event-card">
+        <div class="event-image">
+          <div class="event-badge">PM</div>
+          <img src="/api/placeholder/400/200" alt="Product Management">
+        </div>
+        <div class="event-content">
+          <h2 class="event-title">Product Management</h2>
+          <div class="event-info">
+            <div class="info-item">
+              <div class="info-icon">📅</div>
+              <div>June 10, 2025</div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">📍</div>
+              <div>Innovation Center</div>
+            </div>
+          </div>
+          
+          <a href="#" class="document-link">
+            <div class="info-icon">📄</div>
+            <div>Course Materials</div>
+          </a>
+          
+          <div class="event-footer">
+            <span class="event-type">Workshop</span>
+            <button class="register-btn">Register</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Footer Section -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logo">EventHub</div>
+      
+      <div class="footer-links">
+        <a href="#">About Us</a>
+        <a href="#">For Organizers</a>
+        <a href="#">Blog</a>
+        <a href="#">Contact Us</a>
+      </div>
+      
+      <div class="copyright">
+        &copy; 2025 EventHub. All rights reserved.
+      </div>
+    </div>
+  </footer>
+  
+  <script>
+    // Simple interactive elements
+    document.querySelectorAll('.register-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        alert("Registration submitted!");
+      });
+    });
+    
+    document.querySelectorAll('.document-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        alert("Document will download shortly");
+      });
+    });
+  </script>
+</body>
+</html>

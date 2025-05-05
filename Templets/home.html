@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alumni Portal Home</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .typing {
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid #0a1931;
+      animation: typing 4s steps(40, end), blink 0.75s step-end infinite;
+    }
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+  </style>
+</head>
+<body class="m-0 p-0 font-sans">
+
+  <!-- Navbar -->
+  <nav class="flex items-center w-full bg-blue-900">
+    <!-- Logo Section -->
+    <div class="bg-white px-5 py-2 flex items-center rounded-br-xl">
+      {% load static %}
+      <img src="{% static 'Photos/logo.png' %}" alt="KiTE Logo" class="h-14 w-auto" />
+    </div>
+
+    <!-- Menu Links -->
+    <div class="flex-1 text-white py-2 px-4 flex items-center justify-end">
+      <div class="flex space-x-6 text-base font-semibold">
+        <a href="{% url 'home'%}" class="hover:bg-blue-800 px-5 py-2 rounded-md transition">Home</a>
+        <a href="{% url 'about'%}" class="hover:bg-blue-800 px-5 py-2 rounded-md transition">About</a>
+        <a href="{% url 'alumnidirectory'%}" class="hover:bg-blue-800 px-5 py-2 rounded-md transition">Alumni Directory</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="relative w-full h-screen">
+    <!-- Background Image -->
+    {% load static %}
+    <img src="{% static 'Photos/students.webp' %}" alt="Graduation" class="w-full h-full object-cover" />
+
+    <!-- Text Content -->
+    <div class="absolute top-20 inset-x-0 flex flex-col items-center text-center">
+      <h1 class="text-4xl font-extrabold drop-shadow-lg text-[#0a1931] typing">
+        WELCOME TO ALUMNI PORTAL
+      </h1>
+      <h2 class="text-lg mt-3 font-bold drop-shadow-lg text-[#0a1931] typing" style="animation-delay: 2s;">
+        GUIDE, INSPIRE, CONNECT - BUILDING BRIDGES ACROSS GENERATIONS
+      </h2>
+    </div>
+
+    <!-- Get Started Button -->
+    <div class="absolute bottom-28 inset-x-0 flex justify-center">
+      <a href="{% url 'login'%}" class="group">
+        <button
+          class="relative overflow-hidden bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-lg font-bold py-3 px-8 rounded-full shadow-xl transition-all duration-300 ease-in-out transform group-hover:scale-105 group-hover:shadow-2xl animate-bounce"
+        >
+          <span class="relative z-10">🚀 Get Started</span>
+          <div
+            class="absolute inset-0 w-full h-full bg-white opacity-10 group-hover:opacity-20 transition duration-300 blur-sm"
+          ></div>
+        </button>
+      </a>
+    </div>
+  </div>
+
+</body>
+</html>

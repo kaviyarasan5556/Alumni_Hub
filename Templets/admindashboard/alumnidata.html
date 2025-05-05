@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alumni Data</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 p-6">
+
+  <h1 class="text-3xl font-bold text-center mb-6">Alumni Data</h1>
+
+  <!-- Export Button -->
+  <div class="flex justify-end mb-4">
+    <button 
+      onclick="exportToExcel()"
+      class="bg-green-500 text-white px-4 py-2 rounded transform transition duration-200 hover:scale-105 hover:bg-green-600 active:scale-95"
+    >
+      Export
+    </button>
+  </div>
+
+  <!-- Filter Section -->
+  <div class="flex flex-wrap gap-4 mb-4">
+    <input type="text" id="nameFilter" placeholder="Search by Name" class="border p-2 rounded" />
+    <input type="number" id="batchFilter" placeholder="Batch" class="border p-2 rounded" />
+    <input type="text" id="roleFilter" placeholder="Search by Role" class="border p-2 rounded" />
+    <button 
+      onclick="applyFilters()" 
+      class="bg-blue-500 text-white px-4 py-2 rounded transition-all duration-200 active:bg-blue-700"
+    >
+      Apply
+    </button>
+  </div>
+
+  <!-- Table -->
+  <div class="overflow-x-auto">
+    <table class="w-full border-collapse border border-gray-300">
+      <thead>
+        <tr class="bg-gray-200 text-center">
+          <th class="border p-2">Name</th>
+          <th class="border p-2">Roll No</th>
+          <th class="border p-2">Batch</th>
+          <th class="border p-2">Role</th>
+          <th class="border p-2">Company Name</th>
+          <th class="border p-2">Location</th>
+          <th class="border p-2">LinkedIn Profile</th>
+          <th class="border p-2">Contact No</th>
+        </tr>
+      </thead>
+      <tbody id="alumniTable" class="text-center">
+        <!-- Table rows will be inserted by JavaScript -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script>
+    const alumniData = [
+<<<<<<< HEAD
+      { name: "Sathish Kumar", rollNo: "CSE021", batch: 2022, role: "Machine Learning Engineer", company: "Google", location: "Bangalore", linkedin: "https://linkedin.com/in/sathish", contact: "9012345678" },
+      { name: "Vidhya Mohan", rollNo: "CSE022", batch: 2021, role: "Software Architect", company: "Microsoft", location: "Hyderabad", linkedin: "https://linkedin.com/in/vidhya", contact: "9023456789" },
+      { name: "Ramesh Patel", rollNo: "CSE023", batch: 2020, role: "IoT Engineer", company: "Cisco", location: "Pune", linkedin: "https://linkedin.com/in/ramesh", contact: "9034567890" },
+=======
+      { name: "Subhiksha", rollNo: "12csa19", batch: 2016, role: "Machine Learning Engineer", company: "The Skanda Crop ", location: "Bangalore", linkedin: "https://linkedin.com/in/sathish", contact: "9012345678" },
+      { name: "Suveksha", rollNo: "19ecb41", batch: 2019, role: "Software Architect", company: "Samsung", location: "Chennai", linkedin: "https://linkedin.com/in/vidhya", contact: "9023456789" },
+      { name: "Sathasivam", rollNo: "19csb40", batch: 2019, role: "Software Engineer", company: "Kovai.co", location: "Coimbatore", linkedin: "https://linkedin.com/in/ramesh", contact: "9034567890" },
+      { name: "Deepak Chakravarthy", rollNo: "18csb51", batch: 2018, role: "UI Designer", company: "Kovai.co", location: "Coimbatore", linkedin: "https://linkedin.com/in/ramesh", contact: "9034567890" },
+      { name: "Saravanan G", rollNo: "18it43", batch: 2018, role: "Web Developer", company: "Raja Software Labs Pvt Ltd", location: "Bangalore", linkedin: "https://linkedin.com/in/ramesh", contact: "9034567890" },
+      { name: "Santhosh M", rollNo: "17it36", batch: 2017, role: "App Developer", company: "QAD India Pvt. Ltd", location: "Coimbatore", linkedin: "https://linkedin.com/in/ramesh", contact: "9034567890" },
+      { name: "Hemalatha", rollNo: "18csb40", batch: 2018, role: "Product Manager", company: "CTS", location: "Chennai", linkedin: "https://linkedin.com/in/ramesh", contact: "9034567890" },
+
+>>>>>>> 0891298 (final push)
+      // Add the rest of the data here...
+    ];
+
+    let filteredData = [...alumniData];
+
+    // Function to apply filters
+    function applyFilters() {
+      const name = document.getElementById("nameFilter").value.trim().toLowerCase();
+      const batch = document.getElementById("batchFilter").value.trim();
+      const role = document.getElementById("roleFilter").value.trim().toLowerCase();
+
+      filteredData = alumniData.filter((alumni) => {
+        const matchName = !name || alumni.name.toLowerCase().includes(name);
+        const matchBatch = !batch || alumni.batch.toString() === batch;
+        const matchRole = !role || alumni.role.toLowerCase().includes(role);
+        return matchName && matchBatch && matchRole;
+      });
+
+      renderTable();
+    }
+
+    // Function to render the table with the filtered data
+    function renderTable() {
+      const tbody = document.getElementById("alumniTable");
+      tbody.innerHTML = "";
+      filteredData.forEach((alumni) => {
+        const row = `
+          <tr>
+            <td class="border p-2">${alumni.name}</td>
+            <td class="border p-2">${alumni.rollNo}</td>
+            <td class="border p-2">${alumni.batch}</td>
+            <td class="border p-2">${alumni.role}</td>
+            <td class="border p-2">${alumni.company}</td>
+            <td class="border p-2">${alumni.location}</td>
+            <td class="border p-2">
+              <a href="${alumni.linkedin}" target="_blank" class="text-blue-500 underline">LinkedIn</a>
+            </td>
+            <td class="border p-2">${alumni.contact}</td>
+          </tr>`;
+        tbody.insertAdjacentHTML("beforeend", row);
+      });
+    }
+
+    // Function to export the filtered data to Excel
+    function exportToExcel() {
+      const worksheet = XLSX.utils.json_to_sheet(filteredData);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Filtered Alumni");
+      XLSX.writeFile(workbook, "Filtered_Alumni_Data.xlsx");
+    }
+
+    // Initial render of the table with all data
+    renderTable();
+  </script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Financial Campaigns</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 50;
+    }
+    .modal.active {
+      display: flex;
+      animation: fadeIn 0.3s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .progress-bar {
+      transition: width 1s ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-green-100 min-h-screen py-10 px-6">
+  <div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <header class="mb-12 text-center">
+      <div class="inline-flex items-center justify-center p-2 bg-blue-100 rounded-full mb-4">
+        <svg class="h-8 w-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+          <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+        </svg>
+      </div>
+      <h1 class="text-4xl md:text-5xl font-extrabold text-blue-800 mb-3 drop-shadow">
+        Active Financial Campaigns
+      </h1>
+      <p class="text-blue-600 max-w-2xl mx-auto">
+        Support these initiatives to make a difference in our community. Every contribution counts.
+      </p>
+    </header>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+      {% for campaign in campaigns %}
+      <div class="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border-t-4 border-blue-600 transform hover:-translate-y-1">
+        <div class="mb-4">
+          <h2 class="text-xl font-bold text-blue-700">{{ campaign.campaign_name }}</h2>
+          <p class="text-sm text-gray-500 mt-1">🎯 Goal: 
+            <span class="font-semibold text-green-700">₹{{ campaign.campaign_target_amount }}</span>
+          </p>
+        </div>
+        <p class="text-gray-700 text-sm leading-relaxed mb-4">
+          {{ campaign.campaign_description }}
+        </p>
+    
+        <!-- You can later add dynamic progress if you store `raised_amount` -->
+        <div class="mt-4">
+          <div class="flex justify-between text-sm mb-1">
+            <span class="text-gray-600">Progress</span>
+            <span class="font-medium text-blue-700">0%</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-2.5">
+            <div class="h-2.5 rounded-full bg-blue-600 progress-bar" style="width: 0%"></div>
+          </div>
+          <p class="text-xs text-gray-500 mt-1">Raised: <span class="text-green-600">₹0</span></p>
+        </div>
+    
+        <button onclick="showDonateModal('{{ campaign.campaign_title }}')" 
+                class="mt-5 w-full py-2.5 px-4 rounded-lg font-medium text-white bg-blue-600 hover:bg-blue-700 transition-all duration-300">
+          ❤️ Donate Now
+        </button>
+      </div>
+      {% endfor %}
+    </div>
+    
+</div>
+
+  <script>
+    function showDonateModal(campaign) {
+      const modal = document.getElementById('donateModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const qrCode = document.getElementById('qrCode');
+      
+      modalTitle.textContent = `Donate to ${campaign}`;
+      qrCode.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=Donate${campaign.replace(/\s+/g, '')}`;
+      
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      
+      modal.onclick = function(e) {
+        if (e.target === modal) {
+          hideDonateModal();
+        }
+      };
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          hideDonateModal();
+        }
+      });
+    }
+
+    function hideDonateModal() {
+      const modal = document.getElementById('donateModal');
+      modal.classList.remove('active');
+      document.body.style.overflow = 'unset';
+    }
+  </script>
+</body>
+</html>

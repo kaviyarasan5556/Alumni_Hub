@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alumni Filter Panel with Popup</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f7fa;
+      display: flex;
+    }
+
+    .filter-panel {
+      width: 300px;
+      background-color: #0e2a7b;
+      padding: 40px;
+      min-height: 100vh;
+      color: white;
+    }
+
+    .filter-title {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .filter-input, .filter-select {
+      width: 90%;
+      padding: 12px;
+      border-radius: 6px;
+      border: none;
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+
+    .filter-select {
+      background-color: #6b61ff;
+      color: white;
+    }
+
+    .filter-select option {
+      color: black;
+    }
+
+    .profile-container {
+      flex: 1;
+      padding: 40px;
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .alumni-card {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .alumni-card img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #0e2a7b;
+      transition: 0.3s ease;
+    }
+
+    .batch {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #0e2a7b;
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      position: relative;
+    }
+
+    .modal-content h3 {
+      color: #0e2a7b;
+      margin-bottom: 10px;
+    }
+
+    .modal-content p {
+      margin: 8px 0;
+      font-size: 15px;
+      color: #444;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      font-size: 18px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  {% load static %}
+
+  <!-- Filter Panel -->
+  <div class="filter-panel">
+    <h2 class="filter-title">Filters</h2>
+    <input type="text" placeholder="Search Alumni..." class="filter-input" />
+
+    <label for="role">Search by Role</label>
+    <select id="role" class="filter-select">
+      <option>Select</option>
+      <option>Software Engineer</option>
+      <option>Data Scientist</option>
+    </select>
+
+    <label for="year">Year of Joining</label>
+    <select id="year" class="filter-select">
+      <option>Select</option>
+    </select>
+
+    <label for="batch">Batch</label>
+    <select id="batch" class="filter-select">
+      <option>Select</option>
+      <option>2012-2016</option>
+      <option>2018-2022</option>
+      <option>2019-2023</option>
+    </select>
+
+    <label for="program">Program Name</label>
+    <select id="program" class="filter-select">
+      <option>Select</option>
+      <option>UG</option>
+    </select>
+
+    <label for="designation">Designation</label>
+    <select id="designation" class="filter-select">
+      <option>Select</option>
+      <option>Software Engineer</option>
+      <option>Entrepreneur</option>
+    </select>
+  </div>
+
+  <!-- Profile Grid -->
+  <div class="profile-container">
+    <h2 style="text-align:center; color:#0e2a7b; margin-bottom: 30px;">Alumni Directory</h2>
+    <div class="profile-grid">
+      
+      <!-- Alumni Cards -->
+      <div class="alumni-card" onclick="showModal('Subhiksha C R', '2012 - 2016', 'UG', 'The Skanda Corp', 'Entrepreneur', '-')">
+        <img src="{% static 'AlumniPhotos\Subhiksha C R.jpeg' %}" alt="Subhiksha C R" />
+        <div class="batch">Subhiksha C R</div>
+      </div>
+      <div class="alumni-card" onclick="showModal('Suveksha A', '2019 - 2023', 'UG', 'Samsung', 'Software Development Engineer', '12 LPA')">
+        <img src="{% static 'AlumniPhotos\Suveksha A.jpeg' %}" alt="Suveksha A" />
+        <div class="batch">Suveksha A</div>
+      </div>
+      
+      <div class="alumni-card" onclick="showModal('Sathasivam T', '2019 - 2023', 'UG', 'Kovai.co', 'Associate Software Engineer', '6 LPA')">
+        <img src="{% static 'AlumniPhotos\Sathasivam T.jpeg'%}" alt="Sathasivam T" />
+        <div class="batch">Sathasivam T</div>
+      </div>
+      
+      <div class="alumni-card" onclick="showModal('Deepak Chakravarthy', '2018 - 2022', 'UG', 'Kovai.co', 'Junior Software Engineer', '6 LPA')">
+        <img src="{% static 'AlumniPhotos\Deepak Chakravarthy.jpeg'%}" alt="Deepak Chakravarthy" />
+        <div class="batch">Deepak Chakravarthy</div>
+      </div>
+      
+      <div class="alumni-card" onclick="showModal('Saravanan G', '2018 - 2022', 'UG', 'Raja Software Labs Pvt. Ltd.', 'Junior Developer', '6 LPA')">
+        <img src="{% static 'AlumniPhotos\Saravanan G.jpeg' %}" alt="Saravanan G" />
+        <div class="batch">Saravanan G</div>
+      </div>
+      
+      <div class="alumni-card" onclick="showModal('Santhosh M', '2017 - 2021', 'UG', 'QAD India Pvt. Ltd', '-', '6 LPA')">
+        <img src="{% static 'AlumniPhotos\Santhosh M.jpeg'%}" alt="Santhosh M" />
+        <div class="batch">Santhosh M</div>
+      </div>
+      
+      <div class="alumni-card" onclick="showModal('Hemalatha K', '2018 - 2022', 'UG', 'CTS', 'Programmer Analyst', '4 LPA')">
+        <img src="{% static 'AlumniPhotos\Hemalatha K.jpeg'%}" alt="Hemalatha K" />
+        <div class="batch">Hemalatha K</div>
+      </div>
+      
+      <div class="alumni-card" onclick="showModal('Solomon Raj', '2017 - 2021', 'UG', 'Presidio', 'Cloud Engineer Trainee', '6.1 LPA')">
+        <img src="{% static 'AlumniPhotos\Solomon Raj.jpeg'%}" alt="Solomon Raj" />
+        <div class="batch">Solomon Raj</div>
+      </div>
+      
+      <div class="alumni-card" onclick="showModal('Rahul Prabhu', '2017 - 2021', 'UG', 'Presidio', 'Cloud Engineer Trainee', '6.1 LPA')">
+        <img src="{% static 'AlumniPhotos\Rahul Prabhu.jpeg'%}" alt="Rahul Prabhu" />
+        <div class="batch">Rahul Prabhu</div>
+      </div>
+      
+      <div class="alumni-card" onclick="showModal('Kishore Raj R R', '2016 - 2020', 'UG', 'Coding Mart', 'Product Engineer Trainee', '4.1 LPA')">
+        <img src="{% static 'AlumniPhotos\Kishore Raj RR.jpeg'%}" alt="Kishore Raj R R" />
+        <div class="batch">Kishore Raj R R</div>
+      </div>
+      
+      <div class="alumni-card" onclick="showModal('Meenakshi H', '2016 - 2020', 'UG', 'Capgemini', 'Analyst', '3.8 LPA')">
+        <img src="{% static 'AlumniPhotos\Meenakshi H.jpeg'%}" alt="Meenakshi H" />
+        <div class="batch">Meenakshi H</div>
+      </div>
+      
+      <div class="alumni-card" onclick="showModal('Prema S', '2015 - 2019', 'UG', 'Valtech India Private Limited', 'Associate Software Engineer', '3.5 LPA')">
+        <img src="{% static 'AlumniPhotos\Prema S.jpeg'%}" alt="Prema S" />
+        <div class="batch">Prema S</div>
+      </div>
+      
+      <div class="alumni-card" onclick="showModal('Krishna Divya', '2015 - 2019', 'UG', 'TCS', 'Assistant System Engineer - Trainee', '3.36 LPA')">
+        <img src="{% static 'AlumniPhotos\Krishna Divya.jpeg'%}" alt="Krishna Divya" />
+        <div class="batch">Krishna Divya</div>
+      </div>
+      
+      <div class="alumni-card" onclick="showModal('Priyanka R', '2014 - 2018', 'UG', 'FACE', 'Associate', '2.64 LPA')">
+        <img src="{% static 'AlumniPhotos\Priyanka R.jpeg'%}" alt="Priyanka R" />
+        <div class="batch">Priyanka R</div>
+      </div>
+      
+      <div class="alumni-card" onclick="showModal('Aravindhan S', '2014 - 2018', 'UG', 'Ugam Solutions', 'Associate Analyst - Research Operation', '2.5 LPA')">
+        <img src="{% static 'AlumniPhotos\Aravindhan S.jpeg'%}" alt="Aravindhan S" />
+        <div class="batch">Aravindhan S</div>
+      </div>
+      
+      
+
+    </div>
+  </div>
+
+  <!-- Modal Popup -->
+  <div id="alumniModal" class="modal-overlay">
+    <div class="modal-content" id="modalDetails">
+      <button class="close-btn" onclick="closeModal()">×</button>
+      <h3 id="modalName"></h3>
+      <p><strong>Batch:</strong> <span id="modalBatch"></span></p>
+      <p><strong>Program:</strong> <span id="modalProgram"></span></p>
+      <p><strong>Company:</strong> <span id="modalCompany"></span></p>
+      <p><strong>Designation:</strong> <span id="modalDesignation"></span></p>
+      <p id="modalSalary" style="display: none;"><strong>Salary:</strong> <span></span></p>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script>
+    function showModal(name, batch, program, company, designation, salary) {
+      document.getElementById('modalName').innerText = name;
+      document.getElementById('modalBatch').innerText = batch;
+      document.getElementById('modalProgram').innerText = program;
+      document.getElementById('modalCompany').innerText = company;
+      document.getElementById('modalDesignation').innerText = designation;
+
+      const salaryRow = document.getElementById('modalSalary');
+      if (salary) {
+        salaryRow.style.display = 'block';
+        salaryRow.querySelector('span').innerText = salary;
+      } else {
+        salaryRow.style.display = 'none';
+      }
+
+      document.getElementById('alumniModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('alumniModal').style.display = 'none';
+    }
+
+    // Populate Year of Joining
+    const yearSelect = document.getElementById('year');
+    const currentYear = new Date().getFullYear();
+    for (let i = currentYear; i >= 2000; i--) {
+      const option = document.createElement('option');
+      option.value = i;
+      option.textContent = i;
+      yearSelect.appendChild(option);
+    }
+  </script>
+
+</body>
+</html>

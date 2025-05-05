@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Post an Internship</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+    <div class="bg-blue-600 px-6 py-8 relative">
+      <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500 rounded-full transform translate-x-16 -translate-y-16 opacity-50"></div>
+      <h2 class="text-3xl font-bold text-white text-center relative z-10">Post an Internship</h2>
+      <p class="text-blue-100 text-center mt-2 relative z-10">Create a new internship opportunity</p>
+    </div>
+
+    <form class="p-6 space-y-6" method="post">
+      {% csrf_token %}
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="space-y-2">
+          <label class="flex items-center text-gray-700 font-medium">
+            <i data-lucide="briefcase" class="w-5 h-5 mr-2 text-blue-600"></i>
+            Internship Title *
+          </label>
+          <input type="text" name="title" placeholder="e.g. Software Development Intern" required
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent" />
+        </div>
+
+        <div class="space-y-2">
+          <label class="flex items-center text-gray-700 font-medium">
+            <i data-lucide="building-2" class="w-5 h-5 mr-2 text-blue-600"></i>
+            Company Name *
+          </label>
+          <input type="text" name="company" placeholder="e.g. Tech Solutions Inc" required
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent" />
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="space-y-2">
+          <label class="flex items-center text-gray-700 font-medium">
+            <i data-lucide="map-pin" class="w-5 h-5 mr-2 text-blue-600"></i>
+            Location
+          </label>
+          <input type="text" name="location" placeholder="e.g. New York, NY"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent" />
+        </div>
+
+        <div class="space-y-2">
+          <label class="flex items-center text-gray-700 font-medium">
+            <i data-lucide="clock" class="w-5 h-5 mr-2 text-blue-600"></i>
+            Duration
+          </label>
+          <input type="text" name="duration" placeholder="e.g. 3 months"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent" />
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="space-y-2">
+          <label class="flex items-center text-gray-700 font-medium">
+            <i data-lucide="globe-2" class="w-5 h-5 mr-2 text-blue-600"></i>
+            Type
+          </label>
+          <select name="type"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent">
+            <option>On-site</option>
+            <option>Remote</option>
+            <option>Hybrid</option>
+          </select>
+        </div>
+
+        <div class="space-y-2">
+          <label class="flex items-center text-gray-700 font-medium">
+            <i data-lucide="calendar" class="w-5 h-5 mr-2 text-blue-600"></i>
+            Start Date
+          </label>
+          <input type="date" name="startDate"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent" />
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <label class="flex items-center text-gray-700 font-medium">
+          <i data-lucide="graduation-cap" class="w-5 h-5 mr-2 text-blue-600"></i>
+          Eligibility
+        </label>
+        <input type="text" name="eligibility" placeholder="e.g. Computer Science students in their third year"
+          class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent" />
+      </div>
+
+      <div class="space-y-2">
+        <label class="flex items-center text-gray-700 font-medium">
+          <i data-lucide="file-text" class="w-5 h-5 mr-2 text-blue-600"></i>
+          Description *
+        </label>
+        <textarea name="description" placeholder="Enter detailed internship description..." required
+          class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent h-32"></textarea>
+      </div>
+
+      <button type="submit"
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+        Post Internship
+      </button>
+    </form>
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

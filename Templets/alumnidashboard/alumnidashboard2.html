@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alumni Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans min-h-screen">
+
+  <!-- Navigation Bar -->
+  <nav class="bg-blue-800 py-4 shadow-md">
+    <ul class="flex justify-center gap-20 text-white font-semibold relative text-lg">
+      <li class="relative group">
+        <div class="flex items-center gap-2 cursor-pointer">
+          <span>Alumni Engagement</span>
+          <button onclick="toggleDropdown('resourceDropdown')" class="hover:bg-blue-600 px-2 py-1 rounded transition">⬇️</button>
+        </div>
+        <ul id="resourceDropdown" class="dropdown absolute hidden bg-white text-gray-800 mt-2 rounded-lg shadow-lg w-44">
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer" onclick="showSection('job')">Job Posting</li>
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer" onclick="showSection('internship')">Internship</li>
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer" onclick="showSection('career')">Career Resource</li>
+        </ul>
+      </li>
+
+      <li class="relative group">
+        <div class="flex items-center gap-2 cursor-pointer">
+          <span>Alumni Directory</span>
+          <button onclick="toggleDropdown('alumniDropdown')" class="hover:bg-blue-600 px-2 py-1 rounded transition">⬇️</button>
+        </div>
+        <ul id="alumniDropdown" class="dropdown absolute hidden bg-white text-gray-800 mt-2 rounded-lg shadow-lg w-52">
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer" onclick="showSection('alumniManagement')">Alumni Management</li>
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer" onclick="showSection('alumniProfile')">Alumni Profile</li>
+        </ul>
+      </li>
+
+      <li class="relative group">
+        <div class="flex items-center gap-2 cursor-pointer">
+          <span>Events</span>
+          <button onclick="toggleDropdown('eventDropdown')" class="hover:bg-blue-600 px-2 py-1 rounded transition">⬇️</button>
+        </div>
+        <ul id="eventDropdown" class="dropdown absolute hidden bg-white text-gray-800 mt-2 rounded-lg shadow-lg w-52">
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer" onclick="showSection('upcoming')">📅 Upcoming Event</li>
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer" onclick="showSection('conference')">🎤 Conference</li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Section Container -->
+  <main class="max-w-5xl mx-auto mt-10 p-6 grid gap-10">
+    {% comment %} JOB POSTINGS {% endcomment %}
+    <div id="job" class="section">
+      <h2 class="text-2xl font-bold mb-4 text-gray-800">💼 Job Postings</h2>
+    
+      <!-- Debugging Line: Shows total jobs fetched -->
+      <p class="text-green-600 mb-4">Found {{ jobs|length }} job(s)</p>
+      <p style="color: green">Debug: {{ jobs }}</p>
+
+
+    
+      <div class="grid gap-4 sm:grid-cols-2">
+        {% for job in jobs %}
+        <div class="bg-white p-5 rounded-xl shadow-lg border border-gray-200 transition hover:shadow-blue-300">
+          <h3 class="font-semibold text-xl text-gray-900 mb-1">{{ job.job_title }}</h3>
+          <p class="text-sm text-gray-700 mb-2 font-medium">Company: {{ job.job_company }}</p>
+          <p class="text-sm text-gray-600 mb-2">Location: {{ job.job_location }}</p>
+          <p class="text-sm text-gray-600 mb-2">Type: {{ job.job_type }} | Experience: {{ job.job_experience }}</p>
+          <p class="text-sm text-gray-600 mb-2">Salary: ₹{{ job.job_salary }}</p>
+          <p class="text-sm text-gray-500 mb-2">Skills: {{ job.job_skills }}</p>
+          <p class="text-sm text-gray-600 mt-3">{{ job.job_description }}</p>
+        </div>
+        {% empty %}
+        <p class="text-red-600">No job postings yet.</p>
+        {% endfor %}
+      </div>
+    </div>
+    
+
+    {% comment %} INTERNSHIPS {% endcomment %}
+    <div id="internship" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4 text-gray-800">📝 Internship Opportunities</h2>
+      <div class="grid gap-4 sm:grid-cols-2">
+        {% for intern in internships %}
+        <div class="bg-white p-5 rounded-xl shadow-lg border border-gray-200">
+          <h3 class="font-semibold text-lg text-gray-900">{{ intern.internship_title }} at {{ intern.internship_company }}</h3>
+          <p class="text-sm text-gray-600 mt-2">{{ intern.internship_description }}</p>
+          <p class="text-xs text-gray-400 mt-2">Location: {{ intern.internship_location }}</p>
+          <p class="text-xs text-gray-400">Duration: {{ intern.internship_duration }}</p>
+          <p class="text-xs text-gray-400">Start Date: {{ intern.internship_start_date }}</p>
+          <p class="text-xs text-gray-400">Eligibility: {{ intern.internship_eligibility }}</p>
+        </div>
+        {% empty %}<p>No internships available.</p>{% endfor %}
+      </div>
+    </div>
+
+    {% comment %} CAREER RESOURCES {% endcomment %}
+    <div id="career" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4 text-gray-800">📚 Career Resources</h2>
+      <div class="grid gap-4 sm:grid-cols-2">
+        {% for res in resources %}
+        <div class="bg-white p-5 rounded-xl shadow-lg border border-gray-200">
+          <h3 class="font-semibold text-lg text-gray-900">{{ res.resource_title }}</h3>
+          <p class="text-sm text-gray-600 mt-2">{{ res.resource_description }}</p>
+          <p class="text-xs text-gray-400">Type: {{ res.resource_type }}</p>
+          {% if res.resource_file %}
+          <a href="{{ res.resource_file.url }}" target="_blank" class="text-blue-600 underline mt-2 block text-sm">Download File</a>
+          {% endif %}
+          {% if res.youtube_link %}
+          <a href="{{ res.youtube_link }}" target="_blank" class="text-blue-600 underline mt-1 block text-sm">Watch on YouTube</a>
+          {% endif %}
+        </div>
+        {% empty %}<p>No career resources yet.</p>{% endfor %}
+      </div>
+    </div>
+
+    {% comment %} UPCOMING EVENTS {% endcomment %}
+    <div id="upcoming" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4 text-gray-800">📅 Upcoming Events</h2>
+      <div class="grid gap-4 sm:grid-cols-2">
+        {% for ev in events %}
+        <div class="bg-white p-5 rounded-xl shadow-lg border border-gray-200">
+          <h3 class="font-semibold text-lg text-gray-900">{{ ev.event_title }}</h3>
+          <p class="text-sm text-gray-600 mt-2">📍 {{ ev.event_venue }} | 📅 {{ ev.event_date }}</p>
+          {% if ev.event_primary_image %}
+          <img src="{{ ev.event_primary_image.url }}" class="rounded mt-2 w-full h-48 object-cover" />
+          {% endif %}
+          {% if ev.event_document %}
+          <a href="{{ ev.event_document.url }}" class="text-blue-600 underline text-sm mt-2 block" target="_blank">Download Document</a>
+          {% endif %}
+        </div>
+        {% empty %}<p>No upcoming events listed.</p>{% endfor %}
+      </div>
+    </div>
+
+    {% comment %} CONFERENCES {% endcomment %}
+    <div id="conference" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4 text-gray-800">🎤 Conferences</h2>
+      <div class="grid gap-4 sm:grid-cols-2">
+        {% for conf in conferences %}
+        <div class="bg-white p-5 rounded-xl shadow-lg border border-gray-200">
+          <h3 class="font-semibold text-lg text-gray-900">{{ conf.conference_alumni_name }}</h3>
+          <p class="text-sm text-gray-600 mt-2">📍 {{ conf.conference_venue }} | 📅 {{ conf.conference_date }}</p>
+          {% if conf.conference_primary_image %}
+          <img src="{{ conf.conference_primary_image.url }}" class="rounded mt-2 w-full h-48 object-cover" />
+          {% endif %}
+          {% if conf.conference_document %}
+          <a href="{{ conf.conference_document.url }}" class="text-blue-600 underline text-sm mt-2 block" target="_blank">Download Document</a>
+          {% endif %}
+        </div>
+        {% empty %}<p>No conferences listed.</p>{% endfor %}
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function toggleDropdown(id) {
+      document.querySelectorAll('.dropdown').forEach(d => d.classList.add('hidden'));
+      document.getElementById(id).classList.toggle('hidden');
+    }
+
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+      document.getElementById(id).classList.remove('hidden');
+    }
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('li')) {
+        document.querySelectorAll('.dropdown').forEach(d => d.classList.add('hidden'));
+      }
+    });
+  </script>
+
+</body>
+</html>

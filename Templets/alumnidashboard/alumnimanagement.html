@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alumni Success Stories</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/lucide-css/dist/lucide-icons.css" rel="stylesheet">
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .alumni-card {
+      animation: fadeIn 0.7s ease-out forwards;
+    }
+    .carousel-item {
+      transition: opacity 1s ease;
+    }
+    .carousel-item.active {
+      opacity: 1;
+      z-index: 20;
+    }
+    .carousel-item.inactive {
+      opacity: 0;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+  <!-- Hero Section -->
+  <div class="relative bg-gradient-to-r from-blue-900 to-indigo-800 text-white overflow-hidden">
+    <div class="absolute inset-0 opacity-20">
+      <div class="absolute inset-0 bg-[url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Karan.jpg-drvOGxQNERLLYIUidLK5EWbgSScpRn.jpeg')] bg-cover bg-center blur-sm"></div>
+      <div class="absolute inset-0 bg-blue-900/70"></div>
+    </div>
+    <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-gray-50 to-transparent"></div>
+  </div>
+
+  <div class="container mx-auto px-4 py-16">
+    <!-- Search and Filter -->
+    <div class="mb-16 flex flex-col md:flex-row justify-between items-center gap-6 max-w-6xl mx-auto">
+      <div class="relative w-full md:w-96">
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <i class="icon icon-search text-gray-400" style="font-size: 20px;"></i>
+        </div>
+        <input
+          type="text"
+          placeholder="Search by name, job, or skills..."
+          class="pl-10 pr-4 py-3 w-full rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-sm"
+          id="searchInput"
+        />
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-2">
+        <button class="px-4 py-2 rounded-full text-sm font-medium transition-all bg-blue-600 text-white shadow-md filter-btn" data-filter="All">All</button>
+        <button class="px-4 py-2 rounded-full text-sm font-medium transition-all bg-white text-gray-700 hover:bg-gray-100 shadow-sm filter-btn" data-filter="Technology">Technology</button>
+        <button class="px-4 py-2 rounded-full text-sm font-medium transition-all bg-white text-gray-700 hover:bg-gray-100 shadow-sm filter-btn" data-filter="Data Science">Data Science</button>
+        <button class="px-4 py-2 rounded-full text-sm font-medium transition-all bg-white text-gray-700 hover:bg-gray-100 shadow-sm filter-btn" data-filter="Management">Management</button>
+        <button class="px-4 py-2 rounded-full text-sm font-medium transition-all bg-white text-gray-700 hover:bg-gray-100 shadow-sm filter-btn" data-filter="Security">Security</button>
+        <button class="px-4 py-2 rounded-full text-sm font-medium transition-all bg-white text-gray-700 hover:bg-gray-100 shadow-sm filter-btn" data-filter="Design">Design</button>
+      </div>
+    </div>
+
+    <!-- Featured Alumni Carousel -->
+    <div class="mb-24" id="featuredSection">
+      <h2 class="text-3xl font-bold text-gray-800 mb-8 flex items-center">
+        <i class="icon icon-star text-yellow-500 mr-3" style="font-size: 28px;"></i>
+        Featured Alumni
+      </h2>
+
+      <div class="relative overflow-hidden rounded-2xl shadow-2xl">
+        <div class="absolute top-1/2 left-4 z-10 transform -translate-y-1/2">
+          <button
+            id="prevSlide"
+            class="p-3 rounded-full bg-white/80 hover:bg-white text-gray-800 shadow-lg transition-all"
+          >
+            <i class="icon icon-chevron-left" style="font-size: 24px;"></i>
+          </button>
+        </div>
+
+        <div class="absolute top-1/2 right-4 z-10 transform -translate-y-1/2">
+          <button
+            id="nextSlide"
+            class="p-3 rounded-full bg-white/80 hover:bg-white text-gray-800 shadow-lg transition-all"
+          >
+            <i class="icon icon-chevron-right" style="font-size: 24px;"></i>
+          </button>
+        </div>
+
+        <div class="relative h-[600px] md:h-[500px]" id="carousel">
+          <!-- Carousel Item 1 -->
+          <div class="carousel-item active absolute inset-0">
+            <div class="h-full flex flex-col md:flex-row">
+              <div class="md:w-1/2 relative">
+                <div class="absolute inset-0 bg-gradient-to-r from-blue-900/90 to-blue-900/70 md:bg-gradient-to-r md:from-blue-900/80 md:to-transparent z-10"></div>
+                <img
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Karan.jpg-drvOGxQNERLLYIUidLK5EWbgSScpRn.jpeg"
+                  alt="Ramesh Kumar"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+
+              <div class="md:w-1/2 bg-gradient-to-r from-blue-800 to-indigo-900 p-8 md:p-12 flex flex-col justify-center relative">
+                <div class="absolute top-0 right-0 mt-8 mr-8">
+                  <span class="bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1.5 rounded-full flex items-center">
+                    <i class="icon icon-star mr-1" style="font-size: 12px;"></i>
+                    FEATURED ALUMNI
+                  </span>
+                </div>
+
+                <div class="md:max-w-lg">
+                  <h3 class="text-3xl md:text-4xl font-bold text-white mb-2">Ramesh Kumar</h3>
+                  <p class="text-blue-200 text-xl mb-1">Software Engineer at Google</p>
+                  <p class="text-blue-300 mb-6">Class of 2018</p>
+
+                  <div class="bg-white/10 p-4 rounded-lg mb-6 backdrop-blur-sm">
+                    <p class="text-white italic">"The education and mentorship I received during my time at the university laid the foundation for my success in the tech industry. The practical approach to learning and emphasis on problem-solving skills has been invaluable in my career."</p>
+                  </div>
+
+                  <div class="space-y-4 mb-8">
+                    <div class="flex items-start">
+                      <i class="icon icon-code text-blue-300 mr-3 mt-1 flex-shrink-0" style="font-size: 20px;"></i>
+                      <p class="text-white">Frontend Developer | React, JavaScript, TypeScript</p>
+                    </div>
+
+                    <div class="flex items-start">
+                      <i class="icon icon-award text-blue-300 mr-3 mt-1 flex-shrink-0" style="font-size: 20px;"></i>
+                      <p class="text-white">Winner of Tech Innovator Award 2024, Speaker at React Conf</p>
+                    </div>
+
+                    <div class="flex items-start">
+                      <i class="icon icon-map-pin text-blue-300 mr-3 mt-1 flex-shrink-0" style="font-size: 20px;"></i>
+                      <p class="text-white">San Francisco, USA</p>
+                    </div>
+                  </div>
+
+                  <div class="flex space-x-3">
+                    <a
+                      href="https://linkedin.com/in/karan-sharma"
+                      class="p-2 bg-white/20 rounded-full hover:bg-white/30 transition-colors"
+                    >
+                      <i class="icon icon-linkedin text-white" style="font-size: 20px;"></i>
+                    </a>
+                    <a
+                      href="https://twitter.com/karansharma"
+                      class="p-2 bg-white/20 rounded-full hover:bg-white/30 transition-colors"
+                    >
+                      <i class="icon icon-twitter text-white" style="font-size: 20px;"></i>
+                    </a>
+                    <a
+                      href="https://karansharma.dev"
+                      class="p-2 bg-white/20 rounded-full hover:bg-white/30 transition-colors"
+                    >
+                      <i class="icon icon-globe text-white" style="font-size: 20px;"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Carousel Item 2 -->
+          <div class="carousel-item inactive absolute inset-0">
+            <div class="h-full flex flex-col md:flex-row">
+              <div class="md:w-1/2 relative">
+                <div class="absolute inset-0 bg-gradient-to-r from-blue-900/90 to-blue-900/70 md:bg-gradient-to-r md:from-blue-900/80 md:to-transparent z-10"></div>
+                <img
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Aaditaya%20Kumar.jpg-oFrZVQsmzbRVB9yCQgvTLkruXtP76m.jpeg"
+                  alt="Aaditaya Kumar"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+
+              <div class="md:w-1/2 bg-gradient-to-r from-blue-800 to-indigo-900 p-8 md:p-12 flex flex-col justify-center relative">
+                <div class="absolute top-0 right-0 mt-8 mr-8">
+                  <span class="bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1.5 rounded-full flex items-center">
+                    <i class="icon icon-star mr-1" style="font-size: 12px;"></i>
+                    FEATURED ALUMNI
+                  </span>
+                </div>
+
+                <div class="md:max-w-lg">
+                  <h3 class="text-3xl md:text-4xl font-bold text-white mb-2">Aaditaya Kumar</h3>
+                  <p class="text-blue-200 text-xl mb-1">Data Scientist at Amazon</p>
+                  <p class="text-blue-300 mb-6">Class of 2019</p>
+
+                  <div class="bg-white/10 p-4 rounded-lg mb-6 backdrop-blur-sm">
+                    <p class="text-white italic">"The collaborative environment and cutting-edge curriculum prepared me for the challenges of working in data science. The professors' industry connections helped me secure internships that eventually led to my current position."</p>
+                  </div>
+
+                  <div class="space-y-4 mb-8">
+                    <div class="flex items-start">
+                      <i class="icon icon-code text-blue-300 mr-3 mt-1 flex-shrink-0" style="font-size: 20px;"></i>
+                      <p class="text-white">Machine Learning | AI | Python | Data Analytics</p>
+                    </div>
+
+                    <div class="flex items-start">
+                      <i class="icon icon-award text-blue-300 mr-3 mt-1 flex-shrink-0" style="font-size: 20px;"></i>
+                      <p class="text-white">Best Data Scientist Award 2023, Author of AI Trends Report</p>
+                    </div>
+
+                    <div class="flex items-start">
+                      <i class="icon icon-map-pin text-blue-300 mr-3 mt-1 flex-shrink-0" style="font-size: 20px;"></i>
+                      <p class="text-white">Seattle, USA</p>
+                    </div>
+                  </div>
+
+                  <div class="flex space-x-3">
+                    <a
+                      href="https://linkedin.com/in/aaditaya-kumar"
+                      class="p-2 bg-white/20 rounded-full hover:bg-white/30 transition-colors"
+                    >
+                      <i class="icon icon-linkedin text-white" style="font-size: 20px;"></i>
+                    </a>
+                    <a
+                      href="https://twitter.com/aaditayak"
+                      class="p-2 bg-white/20 rounded-full hover:bg-white/30 transition-colors"
+                    >
+                      <i class="icon icon-twitter text-white" style="font-size: 20px;"></i>
+                    </a>
+                    <a
+                      href="https://aaditayakumar.com"
+                      class="p-2 bg-white/20 rounded-full hover:bg-white/30 transition-colors"
+                    >
+                      <i class="icon icon-globe text-white" style="font-size: 20px;"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Carousel Item 3 -->
+          <div class="carousel-item inactive absolute inset-0">
+            <div class="h-full flex flex-col md:flex-row">
+              <div class="md:w-1/2 relative">
+                <div class="absolute inset-0 bg-gradient-to-r from-blue-900/90 to-blue-900/70 md:bg-gradient-to-r md:from-blue-900/80 md:to-transparent z-10"></div>
+                <img
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Amudha%20Vanan.jpg-5v0AbELJXfqEtBY8DdomVGHJDFZ36B.jpeg"
+                  alt="Amudha Vanan"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+
+              <div class="md:w-1/2 bg-gradient-to-r from-blue-800 to-indigo-900 p-8 md:p-12 flex flex-col justify-center relative">
+                <div class="absolute top-0 right-0 mt-8 mr-8">
+                  <span class="bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1.5 rounded-full flex items-center">
+                    <i class="icon icon-star mr-1" style="font-size: 12px;"></i>
+                    FEATURED ALUMNI
+                  </span>
+                </div>
+
+                <div class="md:max-w-lg">
+                  <h3 class="text-3xl md:text-4xl font-bold text-white mb-2">Amudha Vanan</h3>
+                  <p class="text-blue-200 text-xl mb-1">UI/UX Designer at Adobe</p>
+                  <p class="text-blue-300 mb-6">Class of 2019</p>
+
+                  <div class="bg-white/10 p-4 rounded-lg mb-6 backdrop-blur-sm">
+                    <p class="text-white italic">"The design program's emphasis on user-centered thinking and practical projects gave me the portfolio and skills I needed to land my dream job. The alumni network continues to be a valuable resource for professional growth."</p>
+                  </div>
+
+                  <div class="space-y-4 mb-8">
+                    <div class="flex items-start">
+                      <i class="icon icon-code text-blue-300 mr-3 mt-1 flex-shrink-0" style="font-size: 20px;"></i>
+                      <p class="text-white">Figma | Adobe XD | User Research | Visual Design</p>
+                    </div>
+
+                    <div class="flex items-start">
+                      <i class="icon icon-award text-blue-300 mr-3 mt-1 flex-shrink-0" style="font-size: 20px;"></i>
+                      <p class="text-white">Designed award-winning interfaces, Speaker at UX Global Summit</p>
+                    </div>
+
+                    <div class="flex items-start">
+                      <i class="icon icon-map-pin text-blue-300 mr-3 mt-1 flex-shrink-0" style="font-size: 20px;"></i>
+                      <p class="text-white">Los Angeles, USA</p>
+                    </div>
+                  </div>
+
+                  <div class="flex space-x-3">
+                    <a
+                      href="https://linkedin.com/in/amudha-vanan"
+                      class="p-2 bg-white/20 rounded-full hover:bg-white/30 transition-colors"
+                    >
+                      <i class="icon icon-linkedin text-white" style="font-size: 20px;"></i>
+                    </a>
+                    <a
+                      href="https://twitter.com/amudhavanan"
+                      class="p-2 bg-white/20 rounded-full hover:bg-white/30 transition-colors"
+                    >
+                      <i class="icon icon-twitter text-white" style="font-size: 20px;"></i>
+                    </a>
+                    <a
+                      href="https://amudhavanan.design"
+                      class="p-2 bg-white/20 rounded-full hover:bg-white/30 transition-colors"
+                    >
+                      <i class="icon icon-globe text-white" style="font-size: 20px;"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="absolute bottom-4 left-0 right-0 z-30 flex justify-center space-x-2">
+            <button class="w-3 h-3 rounded-full transition-all bg-white scale-125 carousel-dot" data-index="0" aria-label="Go to slide 1"></button>
+            <button class="w-3 h-3 rounded-full transition-all bg-white/50 hover:bg-white/80 carousel-dot" data-index="1" aria-label="Go to slide 2"></button>
+            <button class="w-3 h-3 rounded-full transition-all bg-white/50 hover:bg-white/80 carousel-dot" data-index="2" aria-label="Go to slide 3"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Regular Alumni Grid -->
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-3xl font-bold text-gray-800 mb-10">All Alumni Stories</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="alumniGrid">
+        <!-- Alumni Card 1 -->
+        <div class="alumni-card bg-white rounded-xl shadow-lg overflow-hidden transform" data-category="Management">
+          <div class="relative h-64 overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent z-10 opacity-70"></div>
+            <img
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Anitha.jpg-XSCxKQ4a83KnhKsfYXNjYKFluRGMXR.jpeg"
+              alt="Anitha Chen"
+              class="w-full h-full object-cover object-center transform hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute bottom-0 left-0 right-0 p-6 z-20">
+              <span class="inline-block px-3 py-1 bg-blue-600 text-white text-xs font-semibold rounded-full mb-2">
+                Management
+              </span>
+              <h3 class="text-2xl font-bold text-white">Anitha Chen</h3>
+              <p class="text-gray-200">Product Manager at Microsoft</p>
+            </div>
+          </div>
+
+          <div class="p-6">
+            <div class="space-y-4">
+              <div class="flex items-start">
+                <i class="icon icon-code text-blue-600 mr-2 mt-1 flex-shrink-0" style="font-size: 18px;"></i>
+                <div>
+                  <h4 class="text-sm font-semibold text-gray-500 mb-1">ROLE & SKILLS</h4>
+                  <p class="text-gray-800">Product Strategy | UX | Agile | Roadmap Planning</p>
+                </div>
+              </div>
+
+              <div class="flex items-start">
+                <i class="icon icon-award text-blue-600 mr-2 mt-1 flex-shrink-0" style="font-size: 18px;"></i>
+                <div>
+                  <h4 class="text-sm font-semibold text-gray-500 mb-1">ACHIEVEMENTS</h4>
+                  <p class="text-gray-800">Led the launch of Microsoft Teams features, Forbes 30 Under 30</p>
+                </div>
+              </div>
+
+              <div class="flex items-start">
+                <i class="icon icon-briefcase text-blue-600 mr-2 mt-1 flex-shrink-0" style="font-size: 18px;"></i>
+                <div>
+                  <h4 class="text-sm font-semibold text-gray-500 mb-1">EXPERIENCE</h4>
+                  <p class="text-gray-800 line-clamp-3">Anitha transitioned from software development to product management, leading high-impact features that enhance user productivity. She has successfully managed cross-functional teams to deliver products that have improved collaboration for over 250,000 enterprise users.</p>
+                </div>
+              </div>
+
+              <div class="flex items-center">
+                <i class="icon icon-map-pin text-blue-600 mr-2 flex-shrink-0" style="font-size: 18px;"></i>
+                <div>
+                  <h4 class="text-sm font-semibold text-gray-500 mb-1">LOCATION</h4>
+                  <p class="text-gray-800">New York, USA</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 pt-6 border-t border-gray-200 flex justify-between items-center">
+              <p class="text-sm text-gray-500">Class of 2017</p>
+
+              <div class="flex space-x-2">
+                <a
+                  href="https://linkedin.com/in/anitha-chen"
+                  class="p-2 text-gray-500 hover:text-blue-600 transition-colors"
+                >
+                  <i class="icon icon-linkedin" style="font-size: 18px;"></i>
+                </a>
+                <a
+                  href="https://twitter.com/anithachen"
+                  class="p-2 text-gray-500 hover:text-blue-500 transition-colors"
+                >
+                  <i class="icon icon-twitter" style="font-size: 18px;"></i>
+                </a>
+                <a
+                  href="mailto:anitha.chen@example.com"
+                  class="p-2 text-gray-500 hover:text-red-500 transition-colors"
+                >
+                  <i class="icon icon-mail" style="font-size: 18px;"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Alumni Card 2 -->
+        <div class="alumni-card bg-white rounded-xl shadow-lg overflow-hidden transform" data-category="Security">
+          <div class="relative h-64 overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent z-10 opacity-70"></div>
+            <img
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Arjun.jpg-DGZvqlWOWGcBWuP8IhhB7j0Ff8xl2D.jpeg"
+              alt="Arjun Williams"
+              class="w-full h-full object-cover object-center transform hover:scale-110 transition-transform duration-700"
+            />
+            <div class="absolute bottom-0 left-0 right-0 p-6 z-20">
+              <span class="inline-block px-3 py-1 bg-blue-600 text-white text-xs font-semibold rounded-full mb-2">
+                Security
+              </span>
+              <h3 class="text-2xl font-bold text-white">Arjun Williams</h3>
+              <p class="text-gray-200">Cybersecurity Analyst at IBM</p>
+            </div>
+          </div>
+
+          <div class="p-6">
+            <div class="space-y-4">
+              <div class="flex items-start">
+                <i class="icon icon-code text-blue-600 mr-2 mt-1 flex-shrink-0" style="font-size: 18px;"></i>
+                <div>
+                  <h4 class="text-sm font-semibold text-gray-500 mb-1">ROLE & SKILLS</h4>
+                  <p class="text-gray-800">Network Security | Ethical Hacking | Cloud Security</p>
+                </div>
+              </div>
+
+              <div class="flex items-start">
+                <i class="icon icon-award text-blue-600 mr-2 mt-1 flex-shrink-0" style="font-size: 18px;"></i>
+                <div>
+                  <h4 class="text-sm font-semibold text-gray-500 mb-1">ACHIEVEMENTS</h4>
+                  <p class="text-gray-800">Developed enterprise-grade security solutions, Featured in CyberSecurity Today</p>
+                </div>
+              </div>
+
+              <div class="flex items-start">
+                <i class="icon icon-briefcase text-blue-600 mr-2 mt-1 flex-shrink-0" style="font-size: 18px;"></i>
+                <div>
+                  <h4 class="text-sm font-semibold text-gray-500 mb-1">EXPERIENCE</h4>
+                  <p class="text-gray-800 line-clamp-3">Arjun has protected major financial institutions from cyber threats and is a key contributor to IBM's security research. His innovative approach to threat detection has prevented potential breaches worth millions in damages for Fortune 500 clients.</p>
+                </div>
+              </div>
+
+              <div class="flex items-center">
+                <i class="icon icon-map-pin text-blue-600 mr-2 flex-shrink-0" style="font-size: 18px;"></i>
+                <div>
+                  <h4 class="text-sm font-semibold text-gray-500 mb-1">LOCATION</h4>
+                  <p class="text-gray-800">Austin, USA</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 pt-6 border-t border-gray-200 flex justify-between items-center">
+              <p class="text-sm text-gray-500">Class of 2020</p>
+
+              <div class="flex space-x-2">
+                <a
+                  href="https://linkedin.com/in/arjun-williams"
+                  class="p-2 text-gray-500 hover:text-blue-600 transition-colors"
+                >
+                  <i class="icon icon-linkedin" style="font-size: 18px;"></i>
+                </a>
+                <a
+                  href="https://twitter.com/arjunwilliams"
+                  class="p-2 text-gray-500 hover:text-blue-500 transition-colors"
+                >
+                  <i class="icon icon-twitter" style="font-size: 18px;"></i>
+                </a>
+                <a
+                  href="https://arjunwilliams.net"
+                  class="p-2 text-gray-500 hover:text-gray-800 transition-colors"
+                >
+                  <i class="icon icon-globe" style="font-size: 18px;"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- No Results Message (Hidden by default) -->
+      <div id="noResults" class="text-center py-20 bg-white rounded-xl shadow-md max-w-2xl mx-auto hidden">
+        <div class="mb-6">
+          <i class="icon icon-search mx-auto text-gray-300" style="font-size: 64px;"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-800 mb-2">No alumni found</h3>
+        <p class="text-gray-600 mb-6">We couldn't find any alumni matching your search criteria.</p>
+        <button
+          id="resetFilters"
+          class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md"
+        >
+          Reset Filters
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Carousel functionality
+    const carouselItems = document.querySelectorAll('.carousel-item');
+    const carouselDots = document.querySelectorAll('.carousel-dot');
+    const prevButton = document.getElementById('prevSlide');
+    const nextButton = document.getElementById('nextSlide');
+    let activeIndex = 0;
+    let carouselInterval;
+
+    function showSlide(index) {
+      carouselItems.forEach(item => {
+        item.classList.remove('active');
+        item.classList.add('inactive');
+      });
+      carouselDots.forEach(dot => {
+        dot.classList.remove('bg-white', 'scale-125');
+        dot.classList.add('bg-white/50');
+      });
+     
+      carouselItems[index].classList.remove('inactive');
+      carouselItems[index].classList.add('active');
+      carouselDots[index].classList.remove('bg-white/50');
+      carouselDots[index].classList.add('bg-white', 'scale-125');
+     
+      activeIndex = index;
+    }
+
+    function nextSlide() {
+      const newIndex = (activeIndex === carouselItems.length - 1) ? 0 : activeIndex + 1;
+      showSlide(newIndex);
+    }
+
+    function prevSlide() {
+      const newIndex = (activeIndex === 0) ? carouselItems.length - 1 : activeIndex - 1;
+      showSlide(newIndex);
+    }
+
+    // Initialize carousel
+    function startCarousel() {
+      carouselInterval = setInterval(nextSlide, 8000);
+    }
+
+    // Event listeners
+    prevButton.addEventListener('click', () => {
+      clearInterval(carouselInterval);
+      prevSlide();
+      startCarousel();
+    });
+
+    nextButton.addEventListener('click', () => {
+      clearInterval(carouselInterval);
+      nextSlide();
+      startCarousel();
+    });
+
+    carouselDots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        clearInterval(carouselInterval);
+        showSlide(index);
+        startCarousel();
+      });
+    });
+
+    // Search and filter functionality
+    const searchInput = document.getElementById('searchInput');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const alumniCards = document.querySelectorAll('.alumni-card');
+    const noResultsDiv = document.getElementById('noResults');
+    const resetFiltersBtn = document.getElementById('resetFilters');
+    let selectedFilter = 'All';
+
+    function filterAlumni() {
+      const searchTerm = searchInput.value.toLowerCase();
+      let visibleCount = 0;
+
+      alumniCards.forEach(card => {
+        const category = card.dataset.category;
+        const name = card.querySelector('h3').textContent.toLowerCase();
+        const job = card.querySelector('h3 + p').textContent.toLowerCase();
+        const role = card.querySelector('.text-gray-800').textContent.toLowerCase();
+       
+        const matchesFilter = selectedFilter === 'All' || category === selectedFilter;
+        const matchesSearch = name.includes(searchTerm) ||
+                             job.includes(searchTerm) ||
+                             role.includes(searchTerm);
+       
+        if (matchesFilter && matchesSearch) {
+          card.style.display = 'block';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      // Show/hide no results message
+      if (visibleCount === 0) {
+        noResultsDiv.classList.remove('hidden');
+      } else {
+        noResultsDiv.classList.add('hidden');
+      }
+    }
+
+    // Event listeners for search and filter
+    searchInput.addEventListener('input', filterAlumni);
+   
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Update active filter button
+        filterButtons.forEach(btn => {
+          btn.classList.remove('bg-blue-600', 'text-white');
+          btn.classList.add('bg-white', 'text-gray-700');
+        });
+        button.classList.remove('bg-white', 'text-gray-700');
+        button.classList.add('bg-blue-600', 'text-white');
+       
+        selectedFilter = button.dataset.filter;
+        filterAlumni();
+      });
+    });
+
+    resetFiltersBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      selectedFilter = 'All';
+     
+      // Reset filter buttons
+      filterButtons.forEach(btn => {
+        btn.classList.remove('bg-blue-600', 'text-white');
+        btn.classList.add('bg-white', 'text-gray-700');
+        if (btn.dataset.filter === 'All') {
+          btn.classList.remove('bg-white', 'text-gray-700');
+          btn.classList.add('bg-blue-600', 'text-white');
+        }
+      });
+     
+      filterAlumni();
+    });
+
+    // Animation with Intersection Observer
+    const observerOptions = {
+      threshold: 0.3
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        } else {
+          entry.target.style.opacity = '0';
+          entry.target.style.transform = 'translateY(10px)';
+        }
+      });
+    }, observerOptions);
+
+    alumniCards.forEach(card => {
+      observer.observe(card);
+    });
+
+    // Initialize
+    startCarousel();
+  </script>
+</body>
+</html>

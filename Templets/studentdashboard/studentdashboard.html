@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    {%load static %}
+    /* Animation for dropdown */
+    .dropdown {
+      transition: all 0.3s ease-in-out;
+    }
+    
+    /* Background styles */
+    body {
+      background-image: url('{% static 'Photos/aboutbg.jpg' %}'), linear-gradient(135deg, #7f9cf5 0%, #4c51bf 100%);
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    
+    /* Content container with subtle transparency */
+    .content-container {
+      background-color: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(5px);
+      border-radius: 0.5rem;
+    }
+    
+    /* Section headers with improved contrast */
+    .section-header {
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+      color: #1a365d;
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+      background-color: rgba(255, 255, 255, 0.7);
+      display: inline-block;
+    }
+  </style>
+</head>
+<body class="font-sans min-h-screen">
+
+  <!-- Navigation Bar -->
+  <nav class="bg-blue-800 py-4 shadow-md">
+    <ul class="flex justify-center gap-20 text-white font-semibold relative text-lg">
+
+      <!-- Resource -->
+      <li class="relative group">
+        <div class="flex items-center gap-2 cursor-pointer">
+          <span>Resource</span>
+          <button onclick="toggleDropdown('resourceDropdown')" class="hover:bg-blue-600 px-2 py-1 rounded transition">⬇️</button>
+        </div>
+        <ul id="resourceDropdown" class="dropdown absolute hidden bg-white text-gray-800 mt-2 rounded-lg shadow-lg w-44">
+<<<<<<< HEAD
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-t" onclick="showSection('video')">📹 Video</li>
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-b" onclick="showSection('document')">📄 Document</li>
+=======
+          <!-- <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-t" onclick="showSection('video')">📹 Video</li>
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-b" onclick="showSection('document')">📄 Document</li> -->
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-t">
+            <a href="{% url 'career_output_resource' %}" class="block w-full h-full">📝 Materials</a>
+          </li>
+>>>>>>> 0891298 (final push)
+        </ul>
+      </li>
+
+      <!-- Job Application -->
+      <li class="relative group">
+        <div class="flex items-center gap-2 cursor-pointer">
+          <span>Job Application</span>
+          <button onclick="toggleDropdown('jobDropdown')" class="hover:bg-blue-600 px-2 py-1 rounded transition">⬇️</button>
+        </div>
+        <ul id="jobDropdown" class="dropdown absolute hidden bg-white text-gray-800 mt-2 rounded-lg shadow-lg w-52">
+<<<<<<< HEAD
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer" onclick="showSection('internship')">📝 Apply Internship</li>
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer" onclick="showSection('jobPortal')">💼 Job Portal</li>
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer" onclick="showSection('feedback')">🗣 Feedback</li>
+        </ul>
+      </li>
+
+      <!-- Event Engagement -->
+=======
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-t">
+            <a href="{% url 'apply_internship' %}" class="block w-full h-full" onclick="showSection('internship'); return false;">📝 Apply Internship</a>
+          </li>
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-t">
+            <a href="{% url 'apply_job' %}" class="block w-full h-full" onclick="showSection('jobPortal'); return false;">💼 Apply Job</a>
+          </li>
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-t">
+            <a href="{% url 'studentfeedback' %}" class="block w-full h-full" onclick="showSection('feedback'); return false;">🗣 Feedback</a>
+          </li>
+        </ul>
+      </li>
+
+      <!-- Event Engagement -->          <!-- <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer" onclick="showSection('upcoming')">📅 Upcoming Event</li> -->
+
+>>>>>>> 0891298 (final push)
+      <li class="relative group">
+        <div class="flex items-center gap-2 cursor-pointer">
+          <span>Event Engagement</span>
+          <button onclick="toggleDropdown('eventDropdown')" class="hover:bg-blue-600 px-2 py-1 rounded transition">⬇️</button>
+        </div>
+        <ul id="eventDropdown" class="dropdown absolute hidden bg-white text-gray-800 mt-2 rounded-lg shadow-lg w-52">
+<<<<<<< HEAD
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer" onclick="showSection('upcoming')">📅 Upcoming Event</li>
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer" onclick="showSection('conference')">🎤 Conference</li>
+=======
+          <!-- <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-t">
+            <a href="{% url 'upcoming_events' %}" class="block w-full h-full" onclick="showSection('upcoming'); return false;">📅 Upcoming Event</a>
+          </li> -->
+          <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-t">
+            <a href="{% url 'apply_conference' %}" class="block w-full h-full" onclick="showSection('conference'); return false;">🎤 Apply Events</a>
+          </li>
+>>>>>>> 0891298 (final push)
+        </ul>
+      </li>
+
+    </ul>
+  </nav>
+
+  <!-- Content Area -->
+  <main class="max-w-5xl mx-auto mt-10 p-6">
+    <div id="video" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4 section-header">🎥 Video Resources</h2>
+      <div class="p-6 rounded-lg shadow content-container">Explore video lectures and tutorials here.</div>
+    </div>
+
+    <div id="document" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4 section-header">📑 Document Resources</h2>
+      <div class="p-6 rounded-lg shadow content-container">Download notes and study materials.</div>
+    </div>
+
+    <div id="internship" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4 section-header">📝 Apply for Internship</h2>
+      <div class="p-6 rounded-lg shadow content-container">Internship opportunities are listed here.</div>
+    </div>
+
+    <div id="jobPortal" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4 section-header">💼 Job Portal</h2>
+      <div class="p-6 rounded-lg shadow content-container">Search and apply for jobs.</div>
+    </div>
+
+    <div id="feedback" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4 section-header">🗣 Feedback</h2>
+      <div class="p-6 rounded-lg shadow content-container">Submit feedback or queries.</div>
+    </div>
+
+    <div id="upcoming" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4 section-header">📅 Upcoming Events</h2>
+      <div class="p-6 rounded-lg shadow content-container">Join exciting upcoming college events.</div>
+    </div>
+
+    <div id="conference" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4 section-header">🎤 Conferences</h2>
+      <div class="p-6 rounded-lg shadow content-container">Attend academic and tech conferences.</div>
+    </div>
+    
+    <!-- Welcome message when no section is selected -->
+    <!-- <div id="welcome" class="p-8 rounded-lg shadow-lg content-container text-center">
+      <h1 class="text-3xl font-bold text-blue-800 mb-4">Welcome to Student Dashboard</h1>
+      <p class="text-lg text-gray-700">Please select an option from the navigation menu above to get started.</p>
+    </div> -->
+  </main>
+
+  <!-- JS Logic -->
+  <script>
+    // Show welcome section by default
+    document.getElementById('welcome').style.display = 'block';
+    
+    function toggleDropdown(id) {
+      document.querySelectorAll('.dropdown').forEach(d => d.classList.add('hidden'));
+      document.getElementById(id).classList.toggle('hidden');
+    }
+
+    function showSection(id) {
+      // Hide welcome section
+      document.getElementById('welcome').style.display = 'none';
+      
+      // Show selected section
+      document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+      document.getElementById(id).classList.remove('hidden');
+    }
+
+    // Close dropdown if click outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('li')) {
+        document.querySelectorAll('.dropdown').forEach(d => d.classList.add('hidden'));
+      }
+    });
+  </script>
+
+</body>
+</html>

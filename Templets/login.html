@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+{% load static %}
+<body
+  class="flex items-center justify-center min-h-screen bg-cover bg-center p-6"
+  style="background-image: url('{% static 'Photos/students.webp' %}'); filter: saturate(1.2);"
+>
+  <div class="w-full max-w-md bg-white bg-opacity-80 backdrop-blur-md rounded-lg p-8 shadow-lg">
+    <h2 id="loginTitle" class="text-2xl font-bold text-center mb-6 text-gray-800">
+      Student Login
+    </h2>
+
+    {% if messages %}
+      <div class="mb-4 p-2 bg-red-100 text-red-700 rounded-lg text-sm">
+        {% for message in messages %}
+          {{ message }}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <form id="loginForm" class="space-y-4" method="POST">
+      {% csrf_token %}
+      <div>
+        <label class="block text-gray-700">Email</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required
+          class="w-full p-3 border rounded-lg"
+          placeholder="Enter your email"
+        />
+      </div>
+      <div>
+        <label class="block text-gray-700">Password</label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          required
+          class="w-full p-3 border rounded-lg"
+          placeholder="Enter your password"
+        />
+      </div>
+      <button
+        type="submit"
+        id="loginBtn"
+        class="w-full bg-blue-600 text-white py-3 rounded-lg"
+      >
+        🔒 Log in
+      </button>
+    </form>
+
+    <div class="flex justify-center gap-3 mt-6">
+      <button id="studentBtn" class="px-4 py-2 rounded-md font-medium bg-blue-600 text-white">
+        Student
+      </button>
+      <button id="alumniBtn" class="px-4 py-2 rounded-md font-medium bg-gray-200">
+        Alumni
+      </button>
+      <button id="adminBtn" class="px-4 py-2 rounded-md font-medium bg-gray-200">
+        Admin
+      </button>
+    </div>
+
+    <div id="signUpPrompt" class="mt-4 text-center">
+      <button
+        onclick="toggleModal(true)"
+        class="text-sm text-gray-600 hover:text-blue-500"
+      >
+        New User? Sign Up
+      </button>
+    </div>
+  </div>
+
+  <!-- Sign Up Modal -->
+  <div
+    id="signupModal"
+    class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  >
+    <div class="bg-white rounded-lg p-8 max-w-md w-full">
+      <h3 class="text-2xl font-bold text-center mb-6">Choose Account Type</h3>
+      <div class="flex flex-col gap-4">
+        <button
+          onclick="window.location.href='{% url 'Studentsignup' %}'"
+          class="bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg"
+        >
+          👨‍🎓 I am a Student
+        </button>
+        <button
+          onclick="window.location.href='{% url 'aluminsignup' %}'"
+          class="bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg"
+        >
+          👨‍💼 I am an Alumni
+        </button>
+      </div>
+      <button
+        onclick="toggleModal(false)"
+        class="mt-6 w-full text-center text-gray-600 hover:text-gray-800"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+
+  <script>
+    let currentUserType = 'student';
+
+    const loginTitle = document.getElementById('loginTitle');
+    const loginBtn = document.getElementById('loginBtn');
+    const signUpPrompt = document.getElementById('signUpPrompt');
+    const studentBtn = document.getElementById('studentBtn');
+    const alumniBtn = document.getElementById('alumniBtn');
+    const adminBtn = document.getElementById('adminBtn');
+
+    function updateUI(role) {
+      currentUserType = role;
+      loginTitle.textContent =
+        role === 'student' ? 'Student Login' : role === 'alumni' ? 'Alumni Login' : 'Admin Login';
+
+      loginBtn.className = `w-full text-white py-3 rounded-lg ${
+        role === 'student'
+          ? 'bg-blue-600'
+          : role === 'alumni'
+          ? 'bg-green-600'
+          : 'bg-yellow-600'
+      }`;
+
+      studentBtn.className = `px-4 py-2 rounded-md font-medium ${
+        role === 'student' ? 'bg-blue-600 text-white' : 'bg-gray-200'
+      }`;
+      alumniBtn.className = `px-4 py-2 rounded-md font-medium ${
+        role === 'alumni' ? 'bg-green-600 text-white' : 'bg-gray-200'
+      }`;
+      adminBtn.className = `px-4 py-2 rounded-md font-medium ${
+        role === 'admin' ? 'bg-yellow-600 text-white' : 'bg-gray-200'
+      }`;
+
+      signUpPrompt.style.display = role === 'admin' ? 'none' : 'block';
+    }
+
+    studentBtn.onclick = () => updateUI('student');
+    alumniBtn.onclick = () => updateUI('alumni');
+    adminBtn.onclick = () => updateUI('admin');
+
+    // Light JS form validation
+    document.getElementById('loginForm').addEventListener('submit', function (e) {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if (!email || !password) {
+        e.preventDefault(); // prevent form submission
+        alert('Please enter both email and password.');
+      }
+    });
+
+    function toggleModal(show) {
+      document.getElementById('signupModal').classList.toggle('hidden', !show);
+    }
+
+    updateUI('student');
+  </script>
+</body>
+</html>

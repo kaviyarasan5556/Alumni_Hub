@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conference Upload</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+<body class="bg-gray-100">
+  <div class="bg-white shadow-lg rounded-xl overflow-hidden max-w-2xl mx-auto mt-16 p-8">
+    <!-- Header -->
+    <div class="bg-blue-600 p-6 relative">
+      <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500 rounded-full transform translate-x-16 -translate-y-16 opacity-50"></div>
+      <h2 class="text-2xl font-bold text-white text-center relative z-10">Conference</h2>
+      <p class="text-blue-100 text-center mt-2 relative z-10">Add a new conference</p>
+    </div>
+
+    <!-- ✅ Form Starts Here -->
+    <form action="{% url 'conference' %}" method="POST" enctype="multipart/form-data" class="p-6">
+      {% csrf_token %}
+
+      <!-- Upload Document -->
+      <div class="mb-6">
+        <div class="flex items-center mb-2">
+          <i data-lucide="file-text" class="text-blue-600 w-5 h-5 mr-2"></i>
+          <label class="text-sm font-medium text-gray-700">Upload Document</label>
+        </div>
+        <div class="border-2 border-dashed rounded-lg p-6 border-gray-300 hover:border-blue-400 transition-all">
+          <input type="file" id="conferenceDocument" name="conferenceDocument" class="hidden" />
+          <label for="conferenceDocument" class="cursor-pointer flex flex-col items-center justify-center">
+            <i data-lucide="upload" class="mx-auto h-10 w-10 text-gray-400"></i>
+            <p class="mt-1 text-sm text-gray-500">Click to upload document</p>
+            <p class="text-xs text-gray-400">PDF, DOC, DOCX, TXT</p>
+          </label>
+        </div>
+      </div>
+
+      <!-- Upload Primary Image -->
+      <div class="mb-6">
+        <div class="flex items-center mb-2">
+          <i data-lucide="image" class="text-blue-600 w-5 h-5 mr-2"></i>
+          <label class="text-sm font-medium text-gray-700">Upload Primary Image</label>
+        </div>
+        <div class="border-2 border-dashed rounded-lg p-6 border-gray-300 hover:border-blue-400 transition-all">
+          <input type="file" id="conferenceImage" name="conferenceImage" class="hidden" />
+          <label for="conferenceImage" class="cursor-pointer flex flex-col items-center justify-center">
+            <i data-lucide="upload" class="mx-auto h-10 w-10 text-gray-400"></i>
+            <p class="mt-1 text-sm text-gray-500">Click to upload image</p>
+            <p class="text-xs text-gray-400">PNG, JPG, GIF up to 10MB</p>
+          </label>
+        </div>
+      </div>
+
+      <!-- Upload Secondary Image -->
+      <div class="mb-6">
+        <div class="flex items-center mb-2">
+          <i data-lucide="image" class="text-blue-600 w-5 h-5 mr-2"></i>
+          <label class="text-sm font-medium text-gray-700">Upload Secondary Image</label>
+        </div>
+        <div class="border-2 border-dashed rounded-lg p-6 border-gray-300 hover:border-blue-400 transition-all">
+          <input type="file" id="conferenceExtraImage" name="conferenceExtraImage" class="hidden" />
+          <label for="conferenceExtraImage" class="cursor-pointer flex flex-col items-center justify-center">
+            <i data-lucide="upload" class="mx-auto h-10 w-10 text-gray-400"></i>
+            <p class="mt-1 text-sm text-gray-500">Click to upload image</p>
+            <p class="text-xs text-gray-400">PNG, JPG, GIF up to 10MB</p>
+          </label>
+        </div>
+      </div>
+
+      <!-- Venue -->
+      <div class="mb-6">
+        <div class="flex items-center mb-2">
+          <i data-lucide="map-pin" class="text-blue-600 w-5 h-5"></i>
+          <label for="conferenceVenue" class="text-sm font-medium text-gray-700 ml-2">Venue</label>
+        </div>
+        <input
+          type="text"
+          id="conferenceVenue"
+          name="conferenceVenue"
+          placeholder="Venue"
+          class="w-full border border-gray-300 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+          required
+        />
+      </div>
+
+      <!-- Date -->
+      <div class="mb-6">
+        <div class="flex items-center mb-2">
+          <i data-lucide="calendar" class="text-blue-600 w-5 h-5"></i>
+          <label for="conferenceDate" class="text-sm font-medium text-gray-700 ml-2">Event Date</label>
+        </div>
+        <input
+          type="date"
+          id="conferenceDate"
+          name="conferenceDate"
+          class="w-full border border-gray-300 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+          required
+        />
+      </div>
+
+      <!-- Alumni Name -->
+      <div class="mb-6">
+        <div class="flex items-center mb-2">
+          <i data-lucide="user" class="text-blue-600 w-5 h-5"></i>
+          <label for="conferenceAlumni" class="text-sm font-medium text-gray-700 ml-2">Alumni Name</label>
+        </div>
+        <input
+          type="text"
+          id="conferenceAlumni"
+          name="conferenceAlumni"
+          placeholder="Alumni Name"
+          class="w-full border border-gray-300 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+          required
+        />
+      </div>
+
+      <!-- Upload Button -->
+      <div class="mt-6">
+        <button
+          type="submit"
+          class="w-full flex items-center justify-center py-4 px-5 rounded-lg text-white font-medium transition duration-300 transform hover:scale-105 bg-blue-600 hover:bg-blue-700"
+        >
+          Upload Conference
+        </button>
+      </div>
+    </form>
+    <!-- ✅ Form Ends Here -->
+  </div>
+
+  <script>
+    lucide.createIcons()
+  </script>
+</body>
+</html>

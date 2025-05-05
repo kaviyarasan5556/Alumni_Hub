@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job Posting Form</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+  <div class="container mx-auto px-4 py-8">
+    <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+      <div class="bg-blue-600 px-6 py-4">
+        <h2 class="text-3xl font-bold text-white text-center">Create Job Posting</h2>
+        <p class="text-blue-100 text-center mt-2">Fill in the details to post a new job opportunity</p>
+      </div>
+
+      <form class="p-6 space-y-6" method="POST">
+        {% csrf_token %}
+        <!-- Job Title -->
+        <div class="space-y-2">
+          <label class="text-gray-700 font-medium">Job Title</label>
+          <input type="text" name="jobTitle" placeholder="e.g. Senior React Developer"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent" required />
+        </div>
+
+        <!-- Company Name -->
+        <div class="space-y-2">
+          <label class="text-gray-700 font-medium">Company Name</label>
+          <input type="text" name="companyName" placeholder="e.g. Tech Solutions Inc"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent" required />
+        </div>
+
+        <!-- Location -->
+        <div class="space-y-2">
+          <label class="text-gray-700 font-medium">Location</label>
+          <input type="text" name="location" placeholder="e.g. New York, NY"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent" required />
+        </div>
+
+        <!-- Salary -->
+        <div class="space-y-2">
+          <label class="text-gray-700 font-medium">Salary</label>
+          <input type="text" name="salary" placeholder="e.g. ₹80,000 - ₹120,000"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent" />
+        </div>
+
+        <!-- Employment Type -->
+        <div class="space-y-2">
+          <label class="text-gray-700 font-medium">Employment Type</label>
+          <select name="employmentType"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent">
+            <option>Full-time</option>
+            <option>Part-time</option>
+            <option>Contract</option>
+            <option>Freelance</option>
+          </select>
+        </div>
+
+        <!-- Experience -->
+        <div class="space-y-2">
+          <label class="text-gray-700 font-medium">Experience Level</label>
+          <select name="experience"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent">
+            <option>0-3 Years</option>
+            <option>3-5 Years</option>
+            <option>5-8 Years</option>
+            <option>More than 8 Years</option>
+          </select>
+        </div>
+
+        <!-- Skills -->
+        <div class="space-y-2">
+          <label class="text-gray-700 font-medium">Required Skills</label>
+          <input type="text" name="skills" placeholder="e.g. React, Node.js, SQL (comma separated)"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent" required />
+        </div>
+
+        <!-- Description -->
+        <div class="space-y-2">
+          <label class="text-gray-700 font-medium">Job Description</label>
+          <textarea name="description" placeholder="Enter detailed job description..."
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent h-32"
+            required></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+          Post Job
+        </button>
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>
+
