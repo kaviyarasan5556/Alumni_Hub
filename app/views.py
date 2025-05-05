@@ -92,11 +92,11 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-<<<<<<< HEAD
+
 from .models import Alumni_Profile,Job_Posting,Internship,Student_Profile,Career_Resource,Upcoming_Events,Conference,Studentsignup,Alumnisignup
-=======
+
 from .models import Alumni_Profile,Job_Posting,Internship,Student_Profile,Career_Resource,Upcoming_Events,Conference,Studentsignup,Alumnisignup,Student_Feedback,Financial_Campaign
->>>>>>> 0891298 (final push)
+
 
 # Home page view
 def home(request):
@@ -184,9 +184,7 @@ def alumni_signup(request):
 @login_required
 def student_dashboard(request):
     return render(request, 'studentdashboard/studentdashboard.html')
-<<<<<<< HEAD
 
-=======
 @login_required
 def apply_internship(request):
     internships = Internship.objects.all()
@@ -210,7 +208,7 @@ def apply_conference(request):
     return render(request, 'studentdashboard/conferenceoutput.html', {
         'conferences': conferences,'events':events
     })
->>>>>>> 0891298 (final push)
+
 @login_required
 def alumni_dashboard(request):
     return render(request, 'alumnidashboard/alumnidashboard.html')
@@ -218,9 +216,7 @@ def alumni_dashboard(request):
 @login_required
 def admin_dashboard(request):
     return render(request, 'admindashboard/admindashboard.html')
-<<<<<<< HEAD
 
-=======
 @login_required
 def student_feedback(request):
     if request.method == 'POST':
@@ -248,7 +244,7 @@ def student_feedback(request):
 @login_required
 def alumni_survey(request):
     return render(request, 'alumnidashboard/alumnisurveyform.html') 
->>>>>>> 0891298 (final push)
+
 # @login_required
 # def admin_dashboard(request):
 #     jobs = Job_Posting.objects.all()
@@ -463,11 +459,10 @@ def conference(request):
         conference_secondary_image = request.FILES.get('conferenceSecondaryImage')
         conference_venue = request.POST.get('conferenceVenue')
         conference_date = request.POST.get('conferenceDate')    
-<<<<<<< HEAD
         conference_alumni_name = request.POST.get('conferenceAlumniName')
-=======
+
         conference_alumni_name = request.POST.get('conferenceAlumni')
->>>>>>> 0891298 (final push)
+
 
         conference = Conference(
             conference_document=conference_document,
@@ -493,8 +488,7 @@ def about(request):
 
 def alumindirectory_view(request):
     return render(request,'alumnidirectory.html')
-<<<<<<< HEAD
-=======
+
 
 def croudfunding_view(request):
     if request.method == 'POST':
@@ -521,4 +515,3 @@ def career_resource_view(request):
     return render(request, 'studentdashboard/resourceoutput.html', {
         'resources': Career_Resource.objects.all(),
     })
->>>>>>> 0891298 (final push)
