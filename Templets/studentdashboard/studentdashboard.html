@@ -52,16 +52,16 @@
           <button onclick="toggleDropdown('resourceDropdown')" class="hover:bg-blue-600 px-2 py-1 rounded transition">⬇️</button>
         </div>
         <ul id="resourceDropdown" class="dropdown absolute hidden bg-white text-gray-800 mt-2 rounded-lg shadow-lg w-44">
-<<<<<<< HEAD
+
           <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-t" onclick="showSection('video')">📹 Video</li>
           <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-b" onclick="showSection('document')">📄 Document</li>
-=======
+
           <!-- <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-t" onclick="showSection('video')">📹 Video</li>
           <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-b" onclick="showSection('document')">📄 Document</li> -->
           <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-t">
             <a href="{% url 'career_output_resource' %}" class="block w-full h-full">📝 Materials</a>
           </li>
->>>>>>> 0891298 (final push)
+
         </ul>
       </li>
 
@@ -72,7 +72,7 @@
           <button onclick="toggleDropdown('jobDropdown')" class="hover:bg-blue-600 px-2 py-1 rounded transition">⬇️</button>
         </div>
         <ul id="jobDropdown" class="dropdown absolute hidden bg-white text-gray-800 mt-2 rounded-lg shadow-lg w-52">
-<<<<<<< HEAD
+
           <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer" onclick="showSection('internship')">📝 Apply Internship</li>
           <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer" onclick="showSection('jobPortal')">💼 Job Portal</li>
           <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer" onclick="showSection('feedback')">🗣 Feedback</li>
@@ -80,7 +80,7 @@
       </li>
 
       <!-- Event Engagement -->
-=======
+
           <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-t">
             <a href="{% url 'apply_internship' %}" class="block w-full h-full" onclick="showSection('internship'); return false;">📝 Apply Internship</a>
           </li>
@@ -95,24 +95,23 @@
 
       <!-- Event Engagement -->          <!-- <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer" onclick="showSection('upcoming')">📅 Upcoming Event</li> -->
 
->>>>>>> 0891298 (final push)
+
       <li class="relative group">
         <div class="flex items-center gap-2 cursor-pointer">
           <span>Event Engagement</span>
           <button onclick="toggleDropdown('eventDropdown')" class="hover:bg-blue-600 px-2 py-1 rounded transition">⬇️</button>
         </div>
         <ul id="eventDropdown" class="dropdown absolute hidden bg-white text-gray-800 mt-2 rounded-lg shadow-lg w-52">
-<<<<<<< HEAD
+
           <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer" onclick="showSection('upcoming')">📅 Upcoming Event</li>
           <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer" onclick="showSection('conference')">🎤 Conference</li>
-=======
+
           <!-- <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-t">
             <a href="{% url 'upcoming_events' %}" class="block w-full h-full" onclick="showSection('upcoming'); return false;">📅 Upcoming Event</a>
           </li> -->
           <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer rounded-t">
             <a href="{% url 'apply_conference' %}" class="block w-full h-full" onclick="showSection('conference'); return false;">🎤 Apply Events</a>
           </li>
->>>>>>> 0891298 (final push)
         </ul>
       </li>
 
