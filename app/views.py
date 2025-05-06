@@ -142,6 +142,18 @@ def student_signup(request):
         course = request.POST.get('course')
         year = request.POST.get('year')
         branch = request.POST.get('branch')
+
+        student= Studentsignup(
+            Name=name,
+            Email=email,
+            Password=password,
+            Roll_Number=roll_number,
+            Course=course,
+            Year=year,
+            Branch=branch
+        )
+        student.save() 
+        # Check if user already exists
         
         # Validate data
         if password != confirm_password:
